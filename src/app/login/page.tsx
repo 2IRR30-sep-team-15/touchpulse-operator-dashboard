@@ -1,8 +1,8 @@
 "use client";
-
 import "./LoginPage.css";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+
 
 export default function LoginPage() {
   const users = [
@@ -78,7 +78,7 @@ export default function LoginPage() {
             <input
               type="password"
               required
-              placeholder="●●●●●●●●"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               ref={passwordRef}
@@ -91,8 +91,7 @@ export default function LoginPage() {
           <button
           type="button"
           onClick={handleLogin}
-          className="w-full text-white rounded-lg transition-colors duration-300"
-          style={{ backgroundColor: "#ffb100" }}
+          className="w-full bg-[#ffb100] text-white rounded-lg transition-colors duration-300"
           >
           Login
           </button>
