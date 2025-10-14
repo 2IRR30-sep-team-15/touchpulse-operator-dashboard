@@ -1,8 +1,7 @@
 "use client";
-
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/sidebar/sidebar";
 import Map from "@/components/map";
-import { redirect } from "next/navigation";
+
 
 export default function Home() {
 
