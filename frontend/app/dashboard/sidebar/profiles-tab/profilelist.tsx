@@ -1,5 +1,5 @@
 import ProfileItem from "./profileitem";
-import { Profile } from "@/lib/interfaces/profile";
+import { Profile } from "../../../../lib/interfaces/profile";
 
 export default function ProfileList({
     profiles,

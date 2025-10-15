@@ -4,9 +4,9 @@
 import * as React from 'react';
 import { Map, Marker } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "../ui/select";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "../../../components/ui/select";
+import { Input } from "../../../components/ui/input";
+import { Button } from "../../../components/ui/button";
 
 
 export default function InteractiveMap() {
