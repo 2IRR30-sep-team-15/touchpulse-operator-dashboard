@@ -23,7 +23,7 @@ const profiles: Profile[] = [
 ];
 
 
-export default function ProfilesTab() {
+export default function ProfilesTab({ onSelectProfile }: { onSelectProfile: (p: Profile) => void }) {
   const [query, setQuery] = useState("");
 
   const filtered = profiles.filter(
@@ -35,7 +35,7 @@ export default function ProfilesTab() {
   return (
     <div className="flex flex-col h-full">
       <SearchBar query={query} setQuery={setQuery} />
-      <ProfileList profiles={filtered} />
+      <ProfileList profiles={filtered} onSelect={onSelectProfile}/>
     </div>
   );
 }
