@@ -1,5 +1,4 @@
 "use client";
-import "./LoginPage.css";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -55,9 +54,9 @@ export default function LoginPage() {
           </p>
 
           {/* Username text box */}
-          <p className="font-bold">
+          {/* <p className="font-bold">
             Username
-          </p>
+          </p> */}
           <div className="mb-4">
             <input
               type="text"
@@ -66,14 +65,14 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               onKeyDown={handleUserEnter}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
           {/* Password text box */}
-          <p className="font-bold">
+          {/* <p className="font-bold">
             Password
-          </p>
+          </p> */}
           <div className="mb-4">
             <input
               type="password"
@@ -83,7 +82,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               ref={passwordRef}
               onKeyDown={handlePasswordEnter}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-2 border rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
@@ -91,7 +90,7 @@ export default function LoginPage() {
           <button
           type="button"
           onClick={handleLogin}
-          className="w-full bg-[#ffb100] text-white rounded-lg transition-colors duration-300"
+          className="w-full px-4 py-2 bg-[#ffb100] text-white rounded-lg transition-colors duration-300"
           >
           Login
           </button>
