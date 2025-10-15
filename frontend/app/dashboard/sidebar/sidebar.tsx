@@ -1,11 +1,10 @@
 "use client";
-
 import { useState } from "react";
-import { Button } from "../../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Search, MessageCircle, User, Map, Settings, Video } from "lucide-react";
-import ProfilesTab from "./profiles-tab/profiles-tab";
-import DetailsTab from "./details-tab/details-tab";
-import { Profile } from "../../../lib/interfaces/profile";
+import ProfilesTab from "@/app/dashboard/sidebar/profiles-tab/profiles-tab";
+import DetailsTab from "@/app/dashboard/sidebar/details-tab/details-tab";
+import { Profile } from "@/lib/interfaces/profile";
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<

@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import SearchBar from "./searchbar";
-import ProfileList from "./profilelist";
-import { Profile } from "../../../../lib/interfaces/profile";
+import SearchBar from "@/app/dashboard/sidebar/profiles-tab/searchbar";
+import ProfileList from "@/app/dashboard/sidebar/profiles-tab/profilelist";
+import { Profile } from "@/lib/interfaces/profile";
 import { PROFILES_DATA } from "@/lib/data/profiles-data"; 
 
 export default function ProfilesTab({ onSelectProfile }: { onSelectProfile: (p: Profile) => void }) {
