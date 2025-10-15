@@ -1,0 +1,16 @@
+name: touchpulse-dashboard
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - db_value:/data
+    environment:
+      - REDIS_PASSWORD=yourpassword
+    command: ["redis-server", "--requirepass", "yourpassword"]
+    
+  
+volumes:
+  db_value:
