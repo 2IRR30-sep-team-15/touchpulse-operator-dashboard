@@ -1,40 +1,35 @@
-# 1. Build Stage
-FROM node:20-alpine AS builder
+# syntax=docker/dockerfile:1
 
-# Set the working directory inside the container
-WORKDIR /app
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
 
-# Copy package files first (for better layer caching)
-COPY package*.json ./
+# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-# Install dependencies
-RUN npm ci
+ARG NODE_VERSION=22.0.0
 
-# Copy the rest of the application source code
+FROM node:${NODE_VERSION}-alpine
+
+# Use production node environment by default.
+# ENV NODE_ENV production
+
+
+WORKDIR /usr/src/app
+
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.npm to speed up subsequent builds.
+# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
+# into this layer.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci
+
+# Copy the rest of the source files into the image.
 COPY . .
 
-# Build the NestJS app
-RUN npm run build
+# Expose the port that the application listens on.
+EXPOSE 3000
 
-# 2. Production Stage
-FROM node:20-alpine AS production
-
-# Set NODE_ENV to production
-ENV NODE_ENV=production
-
-WORKDIR /app
-
-# Copy only necessary files from the build stage
-COPY package*.json ./
-
-# Install only production dependencies
-RUN npm ci --omit=dev
-
-# Copy built files from the builder stage
-COPY --from=builder /app/dist ./dist
-
-# Expose the port your NestJS app listens on
-EXPOSE 8080
-
-# Start the app
-CMD ["node", "dist/main"]
+# Run the application.
+CMD [ "npm", "run", "start:dev" ]
