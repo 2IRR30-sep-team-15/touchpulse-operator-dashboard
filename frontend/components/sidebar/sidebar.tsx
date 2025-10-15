@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import { Search, MessageCircle, User, Map, Settings } from "lucide-react";
-import ProfilesTab from "@/components/sidebar/profiles-tab/profiles-tab";
+import ProfilesTab from "./profiles-tab/profiles-tab";
 import { Profile } from "@/lib/interfaces/profile";
 
 export default function Sidebar() {

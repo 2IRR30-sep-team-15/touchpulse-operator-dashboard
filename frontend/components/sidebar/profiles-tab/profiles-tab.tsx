@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import SearchBar from "@/components/sidebar/profiles-tab/searchbar";
-import ProfileList from "@/components/sidebar/profiles-tab/profilelist";
+import SearchBar from "./searchbar";
+import ProfileList from "./profilelist";
 import { Profile } from "@/lib/interfaces/profile";
 
 
