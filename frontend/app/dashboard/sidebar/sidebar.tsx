@@ -1,14 +1,15 @@
 "use client";
-
 import { useState } from "react";
-import { Button } from "../ui/button";
-import { Search, MessageCircle, User, Map, Settings } from "lucide-react";
-import ProfilesTab from "./profiles-tab/profiles-tab";
+import { Button } from "@/components/ui/button";
+import { Search, MessageCircle, User, Map, Settings, Video } from "lucide-react";
+import ProfilesTab from "@/app/dashboard/sidebar/profiles-tab/profiles-tab";
+import DetailsTab from "@/app/dashboard/sidebar/details-tab/details-tab";
 import { Profile } from "@/lib/interfaces/profile";
+import ChatsTab from "./chats-tab/chats-tab";
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<
-    "profiles" | "details" | "chats" | "locations" | "settings"
+    "settings" | "profiles" | "details" | "chats" | "locations" | "stuff"
   >("profiles");
 
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
@@ -16,7 +17,14 @@ export default function Sidebar() {
   return (
     <aside className="h-screen bg-gray-100 dark:bg-gray-900 p-4 flex flex-col border-r">
       {/* --- Main content --- */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden w-full">
+
+        {activeTab === "settings" && (
+          <div className="flex items-center justify-center h-full text-gray-500">
+            Settings placeholder
+          </div>
+        )}
+
         {activeTab === "profiles" && (
           <ProfilesTab
             onSelectProfile={(profile) => {
@@ -27,16 +35,11 @@ export default function Sidebar() {
         )}
 
         {activeTab === "details" && (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+          <div className="flex flex-col items-center justify-center h-full w-full">
             {selectedProfile ? (
-              <>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {selectedProfile.name}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Details placeholder
-                </p>
-              </>
+              <DetailsTab 
+                profile={selectedProfile}
+              />
             ) : (
               <p>No profile selected</p>
             )}
@@ -44,16 +47,11 @@ export default function Sidebar() {
         )}
 
         {activeTab === "chats" && (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+          <div className="flex flex-col items-center justify-center h-full">
             {selectedProfile ? (
-              <>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {selectedProfile.name}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Chats placeholder
-                </p>
-              </>
+              <ChatsTab
+                profile={selectedProfile}
+              />
             ) : (
               <p>No profile selected</p>
             )}
@@ -61,7 +59,7 @@ export default function Sidebar() {
         )}
 
         {activeTab === "locations" && (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+          <div className="flex flex-col items-center justify-center h-full">
             {selectedProfile ? (
               <>
                 <p className="text-xl font-bold text-gray-900 dark:text-white">
@@ -77,15 +75,36 @@ export default function Sidebar() {
           </div>
         )}
 
-        {activeTab === "settings" && (
-          <div className="flex items-center justify-center h-full text-gray-500">
-            Settings placeholder
+        {activeTab === "stuff" && (
+          <div className="flex flex-col items-center justify-center h-full">
+            {selectedProfile ? (
+              <>
+                <p className="text-xl font-bold text-gray-900 dark:text-white">
+                  {selectedProfile.name}
+                </p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  stuff placeholder
+                </p>
+              </>
+            ) : (
+              <p>No profile selected</p>
+            )}
           </div>
         )}
       </div>
 
+
       {/* --- Bottom menu --- */}
       <div className="flex justify-around border-t pt-2 mt-2 border-gray-100">
+
+        <Button
+          variant={activeTab === "settings" ? "default" : "ghost"}
+          size="icon"
+          onClick={() => setActiveTab("settings")}
+        >
+          <Settings className="h-5 w-5" />
+        </Button>
+
         <Button
           variant={activeTab === "profiles" ? "default" : "ghost"}
           size="icon"
@@ -93,6 +112,9 @@ export default function Sidebar() {
         >
           <Search className="h-5 w-5" />
         </Button>
+
+        {/* --- Vertical Separator --- */}
+        <div className="border-l border-gray-100 h-8 mx-1 self-center" />
 
         <Button
           variant={activeTab === "details" ? "default" : "ghost"}
@@ -117,13 +139,13 @@ export default function Sidebar() {
         >
           <Map className="h-5 w-5" />
         </Button>
-        
+
         <Button
-          variant={activeTab === "settings" ? "default" : "ghost"}
+          variant={activeTab === "stuff" ? "default" : "ghost"}
           size="icon"
-          onClick={() => setActiveTab("settings")}
+          onClick={() => setActiveTab("stuff")}
         >
-          <Settings className="h-5 w-5" />
+          <Video className="h-5 w-5" />
         </Button>
       </div>
     </aside>
