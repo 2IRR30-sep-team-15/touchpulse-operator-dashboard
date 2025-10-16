@@ -1,9 +1,8 @@
 'use client';
-import { useState } from 'react';
-import SearchBar from '@/app/dashboard/sidebar/profiles-tab/searchbar';
-import ProfileList from '@/app/dashboard/sidebar/profiles-tab/profilelist';
+
+import SearchBar from '@/components/sidebar/profiles-tab/searchbar';
+import ProfileList from '@/components/sidebar/profiles-tab/profilelist';
 import { Profile } from '@/lib/interfaces/profile';
-import { PROFILES_DATA } from '@/lib/data/profiles-data';
 import { useUsersQuery } from '@/lib/backend/users';
 
 export default function ProfilesTab({

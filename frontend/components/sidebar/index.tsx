@@ -10,11 +10,11 @@ import {
   Video,
 } from 'lucide-react';
 
-import LocationsTab from '@/app/dashboard/sidebar/locations-tab';
-import ProfilesTab from '@/app/dashboard/sidebar/profiles-tab';
-import DetailsTab from '@/app/dashboard/sidebar/details-tab';
-import ChatsTab from '@/app/dashboard/sidebar/chats-tab';
-import CallTab from '@/app/dashboard/sidebar/call-tab';
+import LocationsTab from '@/components/sidebar/locations-tab';
+import ProfilesTab from '@/components/sidebar/profiles-tab';
+import DetailsTab from '@/components/sidebar/details-tab';
+import ChatsTab from '@/components/sidebar/chats-tab';
+import CallTab from '@/components/sidebar/call-tab';
 
 import { Profile } from '@/lib/interfaces/profile';
 

@@ -1,4 +1,4 @@
-import ProfileItem from '@/app/dashboard/sidebar/profiles-tab/profileitem';
+import ProfileItem from '@/components/sidebar/profiles-tab/profileitem';
 import { Profile } from '@/lib/interfaces/profile';
 
 export default function ProfileList({

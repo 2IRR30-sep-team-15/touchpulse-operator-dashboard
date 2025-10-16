@@ -1,6 +1,7 @@
 'use client';
-import Sidebar from '@/app/dashboard/sidebar';
-import Map from '@/app/dashboard/map/map';
+
+import Sidebar from '@/components/sidebar';
+import Map from '@/components/map';
 
 export default function Home() {
   return (
