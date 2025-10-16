@@ -1,14 +1,12 @@
 import { Controller, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
   findAll(@Query('search') search?: string) {
-    console.log(search);
-
     return this.usersService.findAll(search);
   }
 
