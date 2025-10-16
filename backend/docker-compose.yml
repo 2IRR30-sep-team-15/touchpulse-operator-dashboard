@@ -1,16 +1,14 @@
 name: touchpulse-dashboard
 services:
   redis:
-    image: redis:latest
+    image: redis/redis-stack:latest # includes Redis Search for Redis OM to work
     restart: always
     ports:
       - '6379:6379'
     volumes:
       - db_value:/data
     environment:
-      - REDIS_PASSWORD=yourpassword
-    command: ["redis-server", "--requirepass", "yourpassword"]
-    
-  
+      - REDIS_ARGS=--requirepass yourpassword
+
 volumes:
   db_value:
