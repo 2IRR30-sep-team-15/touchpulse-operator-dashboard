@@ -1,10 +1,8 @@
-"use client";
-import Sidebar from "@/app/dashboard/sidebar/sidebar";
-import Map from "@/app/dashboard/map/map";
-
+'use client';
+import Sidebar from '@/app/dashboard/sidebar';
+import Map from '@/app/dashboard/map/map';
 
 export default function Home() {
-
   return (
     <div className="flex min-h-screen w-screen">
       {/* Sidebar takes 1/4 of the width */}
