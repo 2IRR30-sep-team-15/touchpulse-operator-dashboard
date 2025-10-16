@@ -1,4 +1,4 @@
-const BASE_BACKEND = `${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/api`;
+const BASE_BACKEND = `/api`;
 
 const urls = {
   base_backend: {

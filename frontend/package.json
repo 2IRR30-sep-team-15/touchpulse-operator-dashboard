@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "format": "prettier --write .",
-    "dev": "NEXT_PUBLIC_BASE_BACKEND_URL='http://localhost' next dev --turbopack",
-    "build": "NEXT_PUBLIC_BASE_BACKEND_URL='' next build --turbopack",
+    "dev": "PROXY_TARGET_URL=\"http://localhost\" next dev --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint"
   },
