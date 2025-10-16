@@ -1,20 +1,21 @@
 'use client';
 
-import ProfileList from './profile-list';
-import { useProfiles } from './index.hooks';
-import SearchBar from './searchbar';
 import LoadingThreeDots from '@/components/common/loading-three-dots';
 
-export default function ProfilesTab({
-  onSelectProfile,
-}: {
+import ProfileList from './profile-list';
+import { useProfiles } from './index.hooks';
+import SearchBar from './search-bar';
+
+interface ProfilesTabProps {
   onSelectProfile: (p: Profile) => void;
-}) {
-  const { profiles, isLoading, setSearchQuery } = useProfiles();
+}
+
+export default function ProfilesTab({ onSelectProfile }: ProfilesTabProps) {
+  const { profiles, isLoading, searchQuery, setSearchQuery } = useProfiles();
 
   return (
-    <div className="flex flex-col h-full items-center">
-      <SearchBar setSearchQuery={setSearchQuery} />
+    <div className="flex flex-col h-full items-center gap-4">
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {isLoading ? (
         <LoadingThreeDots />

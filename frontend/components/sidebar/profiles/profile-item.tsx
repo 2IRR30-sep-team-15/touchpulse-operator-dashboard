@@ -35,11 +35,11 @@ export default function ProfileItem({ profile, onSelect }: ProfileItemProps) {
 
       {/* name and email */}
       <div className="flex-1">
-        <p className="font-medium text-gray-900 dark:text-gray-100">
-          {profile.name}
+        <p className="text-base font-medium text-gray-900 dark:text-gray-100">
+          {profile.name ?? 'NAME'}
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          {profile.username}
+          {profile.username ?? 'USERNAME'}
         </p>
       </div>
 
@@ -50,16 +50,16 @@ export default function ProfileItem({ profile, onSelect }: ProfileItemProps) {
       >
         <Button
           onClick={handleCall}
-          variant={'ghost'}
-          size={'icon'}
+          variant="ghost"
+          size="icon"
           className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
         >
           <Phone className="w-5 h-5" />
         </Button>
         <Button
           onClick={handleLocation}
-          variant={'ghost'}
-          size={'icon'}
+          variant="ghost"
+          size="icon"
           className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
         >
           <MapPin className="w-5 h-5" />

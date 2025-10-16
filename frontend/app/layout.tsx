@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Demo Sidebar App',
+  title: 'Pathway Dashboard',
   description: 'A simple demo with shadcn and Tailwind',
 };
 

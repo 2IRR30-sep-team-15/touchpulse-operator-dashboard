@@ -16,10 +16,16 @@ import DetailsTab from '@/components/sidebar/details';
 import ChatsTab from '@/components/sidebar/chats';
 import CallTab from '@/components/sidebar/call';
 
+type TabType =
+  | 'settings'
+  | 'profiles'
+  | 'details'
+  | 'chats'
+  | 'locations'
+  | 'stuff';
+
 export default function Sidebar() {
-  const [activeTab, setActiveTab] = useState<
-    'settings' | 'profiles' | 'details' | 'chats' | 'locations' | 'stuff'
-  >('profiles');
+  const [activeTab, setActiveTab] = useState<TabType>('profiles');
 
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 

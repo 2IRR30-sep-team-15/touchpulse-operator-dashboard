@@ -16,6 +16,7 @@ export const useProfiles = () => {
     profiles: profiles ?? [],
     isLoading,
     isError,
+    searchQuery,
     setSearchQuery,
   };
 };

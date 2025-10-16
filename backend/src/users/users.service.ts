@@ -15,9 +15,22 @@ export class UsersService implements OnModuleInit {
     await this.userRepository.createIndex();
   }
 
-  async findAll() {
-    // Example method to demonstrate service functionality
-    return await this.userRepository.search().return.all();
+  async findAll(search?: string) {
+    const q = this.userRepository.search();
+
+    if (search && search.length > 1) {
+      q.where('email').match(`*${search}*`);
+    }
+
+    return await q.returnAll();
+  }
+
+  async findById(id: string) {
+    return await this.userRepository
+      .search()
+      .where('id')
+      .equals(id)
+      .returnFirst();
   }
 
   async create() {
