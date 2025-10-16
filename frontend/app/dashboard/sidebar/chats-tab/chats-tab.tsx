@@ -12,7 +12,7 @@ export default function ChatsTab({ profile }: ChatsTabProps) {
 
     return (
         <div className="flex flex-col h-full space-y-6 overflow-y-auto">
-            <h2 className="text-xl border-b dark:border-gray-700">
+            <h2 className="text-xl">
                 Chats for {profile.name}
             </h2>
 
