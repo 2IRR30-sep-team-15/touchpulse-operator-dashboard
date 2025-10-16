@@ -9,7 +9,7 @@ export default function ProfileList({
 }) {
   return (
     <div
-      className="flex-1 overflow-y-auto divide-y divide-gray-300 dark:divide-gray-700
+      className="flex-1 w-full overflow-y-auto divide-y divide-gray-300 dark:divide-gray-700
       [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       {profiles.map((profile) => (

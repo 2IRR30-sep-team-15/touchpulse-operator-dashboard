@@ -1,17 +1,14 @@
 import { Input } from '@/components/ui/input';
 
 export default function SearchBar({
-  query,
-  setQuery,
+  setSearchQuery,
 }: {
-  query: string;
-  setQuery: (v: string) => void;
+  setSearchQuery: (v: string) => void;
 }) {
   return (
     <Input
       placeholder="Search profiles..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
+      onChange={(e) => setSearchQuery(e.target.value)}
       className="mb-4"
     />
   );

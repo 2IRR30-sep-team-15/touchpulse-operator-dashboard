@@ -10,11 +10,11 @@ import {
   Video,
 } from 'lucide-react';
 
-import LocationsTab from '@/components/sidebar/locations-tab';
-import ProfilesTab from '@/components/sidebar/profiles-tab';
-import DetailsTab from '@/components/sidebar/details-tab';
-import ChatsTab from '@/components/sidebar/chats-tab';
-import CallTab from '@/components/sidebar/call-tab';
+import LocationsTab from '@/components/sidebar/locations';
+import ProfilesTab from '@/components/sidebar/profiles';
+import DetailsTab from '@/components/sidebar/details';
+import ChatsTab from '@/components/sidebar/chats';
+import CallTab from '@/components/sidebar/call';
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<

@@ -1,20 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchWithAuth } from '../httpCalls';
 import urls from '../urls';
-import { toast } from 'sonner';
 
-export const useUsersQuery = () => {
-  const url = urls.base_backend.users;
+interface UsersQueryProps {
+  search?: string;
+  ordering?: string;
+}
+
+export const useUsersQuery = (props: UsersQueryProps = {}) => {
+  const baseUrl = urls.base_backend.users;
+  const queryParams: string[] = [];
+
+  if (props.search) queryParams.push(`search=${props.search}`);
+  if (props.ordering) queryParams.push(`ordering=${props.ordering}`);
+
+  const urlWithParams = `${baseUrl}${
+    queryParams.length > 0 ? '?' + queryParams.join('&') : ''
+  }`;
 
   const call = async (): Promise<Profile[]> => {
-    const response = await fetchWithAuth<Profile[]>(url);
+    const response = await fetchWithAuth<Profile[]>(urlWithParams);
 
     return response.data;
   };
 
   return useQuery({
-    queryKey: ['useUsersQuery'],
+    queryKey: ['useUsersQuery', urlWithParams],
     queryFn: call,
-    refetchInterval: 1000 * 60 * 60 * 24, // 24 hours
   });
 };
