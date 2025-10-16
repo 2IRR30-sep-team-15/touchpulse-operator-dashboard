@@ -1,15 +1,14 @@
 'use client';
 
-import SearchBar from '@/components/sidebar/profiles-tab/searchbar';
-import ProfileList from '@/components/sidebar/profiles-tab/profilelist';
-import { useUsersQuery } from '@/lib/backend/users';
+import ProfileList from './profile-list';
+import { useProfiles } from './index.hooks';
 
 export default function ProfilesTab({
   onSelectProfile,
 }: {
   onSelectProfile: (p: Profile) => void;
 }) {
-  const { data: profiles } = useUsersQuery();
+  const { profiles, isLoading, isError } = useProfiles();
 
   // const filtered = profiles?.filter(
   //   (p) =>

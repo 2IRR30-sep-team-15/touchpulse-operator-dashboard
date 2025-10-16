@@ -1,4 +1,4 @@
-import ProfileItem from '@/components/sidebar/profiles-tab/profileitem';
+import ProfileItem from './profile-item';
 
 export default function ProfileList({
   profiles,
@@ -12,8 +12,8 @@ export default function ProfileList({
       className="flex-1 overflow-y-auto divide-y divide-gray-300 dark:divide-gray-700
       [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
-      {profiles?.map((p, i) => (
-        <ProfileItem key={i} profile={p} onSelect={onSelect} />
+      {profiles.map((profile) => (
+        <ProfileItem key={profile.id} profile={profile} onSelect={onSelect} />
       ))}
     </div>
   );

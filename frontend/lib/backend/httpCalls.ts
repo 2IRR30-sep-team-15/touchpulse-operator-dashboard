@@ -9,6 +9,7 @@ const getBearerTokenConfig = () => {
   const headers: Record<string, string> = {
     'ngrok-skip-browser-warning': 'true',
   };
+
   if (token) {
     return { headers: { ...headers, Authorization: `Bearer ${token}` } };
   }

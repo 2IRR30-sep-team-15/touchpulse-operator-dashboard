@@ -1,13 +1,22 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Phone, MapPin } from 'lucide-react';
 
-export default function ProfileItem({
-  profile,
-  onSelect,
-}: {
+interface ProfileItemProps {
   profile: Profile;
   onSelect?: (profile: Profile) => void;
-}) {
+  className?: string;
+}
+
+export default function ProfileItem({ profile, onSelect }: ProfileItemProps) {
+  const handleCall = () => {
+    console.log('Do call logic: ', profile.name);
+  };
+
+  const handleLocation = () => {
+    console.log('Do location logic: ', profile.name);
+  };
+
   return (
     <div
       className="flex items-center gap-3 py-3 px-2 transition-colors"
@@ -18,7 +27,7 @@ export default function ProfileItem({
         {profile.image && <AvatarImage src={profile.image} />}
         <AvatarFallback>
           {profile.name
-            .split(' ')
+            ?.split(' ')
             .map((n) => n[0])
             .join('')}
         </AvatarFallback>
@@ -39,18 +48,22 @@ export default function ProfileItem({
         className="flex items-center gap-2"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition"
-          onClick={() => console.log('Call', profile.name)}
+        <Button
+          onClick={handleCall}
+          variant={'ghost'}
+          size={'icon'}
+          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
         >
-          <Phone size={18} />
-        </button>
-        <button
-          className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition"
-          onClick={() => console.log('Location', profile.name)}
+          <Phone className="w-5 h-5" />
+        </Button>
+        <Button
+          onClick={handleLocation}
+          variant={'ghost'}
+          size={'icon'}
+          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
         >
-          <MapPin size={18} />
-        </button>
+          <MapPin className="w-5 h-5" />
+        </Button>
       </div>
     </div>
   );

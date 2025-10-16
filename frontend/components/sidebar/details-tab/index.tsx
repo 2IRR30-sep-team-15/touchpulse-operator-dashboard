@@ -10,13 +10,10 @@ import {
   Dog,
 } from 'lucide-react';
 
-// NOTE: You must update your 'Profile' interface to include fields for:
-// username, phone, email, languages (array of strings), and accessibility (AccessibilityDetails)
-
 export default function DetailsTab({ profile }: { profile: Profile }) {
   // Helper function for the initial fallback text
   const fallbackInitials = profile.name
-    .split(' ')
+    ?.split(' ')
     .map((n) => n[0])
     .join('');
 
@@ -64,13 +61,13 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
         {/* Email */}
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
           <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-sm">{profile.details.email}</p>
+          <p className="text-sm">{profile.email}</p>
         </div>
 
         {/* Phone */}
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
           <Phone className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-sm">{profile.details.phone}</p>
+          <p className="text-sm">{profile.details?.phone}</p>
         </div>
       </section>
 
@@ -80,7 +77,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
           <Languages className="w-5 h-5" /> Languages
         </h3>
         <div className="flex gap-2 ml-7">
-          {profile.details.languages.map((lang, index) => (
+          {profile.details?.languages.map((lang, index) => (
             <Badge
               key={index}
               variant="default"
@@ -106,7 +103,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <p>Sight:</p>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              {profile.details.sight}
+              {profile.details?.sight}
             </p>
           </div>
 
@@ -117,7 +114,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <CircleEllipsis className="w-4 h-4 text-gray-400 dark:text-gray-500" />
               <p>Cane:</p>
             </div>
-            {renderBooleanBadge(profile.details.cane)}
+            {profile.details?.cane && renderBooleanBadge(profile.details?.cane)}
           </div>
 
           {/* Guide Dog */}
@@ -126,7 +123,8 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <Dog className="w-4 h-4 text-gray-400 dark:text-gray-500" />
               <p>Guide Dog:</p>
             </div>
-            {renderBooleanBadge(profile.details.guideDog)}
+            {profile.details?.guideDog &&
+              renderBooleanBadge(profile.details?.guideDog)}
           </div>
         </div>
       </section>

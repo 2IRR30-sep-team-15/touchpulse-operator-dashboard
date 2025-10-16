@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchWithAuth } from '../httpCalls';
 import urls from '../urls';
-import { Profile } from '@/lib/interfaces/profile';
+import { toast } from 'sonner';
 
 export const useUsersQuery = () => {
   const url = urls.base_backend.users;
 
   const call = async (): Promise<Profile[]> => {
     const response = await fetchWithAuth<Profile[]>(url);
-    return response.data; // Ensure the correct data type is returned
+
+    return response.data;
   };
 
   return useQuery({
