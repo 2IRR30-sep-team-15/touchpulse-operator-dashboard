@@ -29,7 +29,7 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
     );
 
     return (
-        <div className="p-4 h-full w-full">
+        <div className="h-full w-full">
             {/* 1. Profile Header Section */}
             <div className="flex items-center justify-between pb-4">
                 <div className="flex items-center gap-3">
@@ -56,13 +56,13 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
                 {/* Email */}
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
                     <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                    <p className="text-sm">{profile.email}</p>
+                    <p className="text-sm">{profile.details.email}</p>
                 </div>
                 
                 {/* Phone */}
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
                     <Phone className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                    <p className="text-sm">{profile.phone}</p>
+                    <p className="text-sm">{profile.details.phone}</p>
                 </div>
             </section>
             
@@ -72,7 +72,7 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
                     <Languages className="w-5 h-5" /> Languages
                 </h3>
                 <div className="flex gap-2 ml-7">
-                    {profile.languages.map((lang, index) => (
+                    {profile.details.languages.map((lang, index) => (
                         <Badge 
                             key={index} 
                             variant="default" 
@@ -97,7 +97,7 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
                             <Eye className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                             <p>Sight:</p>
                         </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{profile.accessibility.sight}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{profile.details.sight}</p>
                     </div>
 
                     {/* Cane */}
@@ -107,7 +107,7 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
                             <CircleEllipsis className="w-4 h-4 text-gray-400 dark:text-gray-500" /> 
                             <p>Cane:</p>
                         </div>
-                        {renderBooleanBadge(profile.accessibility.cane)}
+                        {renderBooleanBadge(profile.details.cane)}
                     </div>
                     
                     {/* Guide Dog */}
@@ -116,7 +116,7 @@ export default function DetailsTab({ profile }: { profile: Profile; }) {
                             <Dog className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                             <p>Guide Dog:</p>
                         </div>
-                        {renderBooleanBadge(profile.accessibility.guideDog)}
+                        {renderBooleanBadge(profile.details.guideDog)}
                     </div>
                 </div>
             </section>

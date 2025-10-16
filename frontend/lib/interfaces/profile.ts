@@ -1,14 +1,14 @@
+import { Detail } from "./detail"
+import { Chat } from "./chat"
+import { Location } from "./location"
+
+
 export interface Profile {
     id: string;
     name: string;
     username: string;
     image?: string;
-    email: string;
-    phone: string;
-    languages: string[];
-    accessibility: {
-        sight: 'Fully sighted' | 'Partially sighted' | 'Blind';
-        cane: boolean;
-        guideDog: boolean;
-    };
+    details: Detail;
+    chats: Chat[];
+    locations: Location[];
 }

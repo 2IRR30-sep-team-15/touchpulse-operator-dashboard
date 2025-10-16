@@ -5,6 +5,7 @@ import { Search, MessageCircle, User, Map, Settings, Video } from "lucide-react"
 import ProfilesTab from "@/app/dashboard/sidebar/profiles-tab/profiles-tab";
 import DetailsTab from "@/app/dashboard/sidebar/details-tab/details-tab";
 import { Profile } from "@/lib/interfaces/profile";
+import ChatsTab from "./chats-tab/chats-tab";
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<
@@ -16,7 +17,7 @@ export default function Sidebar() {
   return (
     <aside className="h-screen bg-gray-100 dark:bg-gray-900 p-4 flex flex-col border-r">
       {/* --- Main content --- */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden w-full">
 
         {activeTab === "settings" && (
           <div className="flex items-center justify-center h-full text-gray-500">
@@ -37,7 +38,7 @@ export default function Sidebar() {
           <div className="flex flex-col items-center justify-center h-full w-full">
             {selectedProfile ? (
               <DetailsTab 
-                  profile={selectedProfile}
+                profile={selectedProfile}
               />
             ) : (
               <p>No profile selected</p>
@@ -48,14 +49,9 @@ export default function Sidebar() {
         {activeTab === "chats" && (
           <div className="flex flex-col items-center justify-center h-full">
             {selectedProfile ? (
-              <>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {selectedProfile.name}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Chats placeholder
-                </p>
-              </>
+              <ChatsTab
+                profile={selectedProfile}
+              />
             ) : (
               <p>No profile selected</p>
             )}
