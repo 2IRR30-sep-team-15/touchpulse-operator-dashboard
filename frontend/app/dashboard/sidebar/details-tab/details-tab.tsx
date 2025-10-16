@@ -1,15 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../components/ui/avatar";
 import { Badge } from "../../../../components/ui/badge";
 import { Profile } from "../../../../lib/interfaces/profile";
-import { Phone, MapPin, X, Mail, Languages, Accessibility, Eye, CircleEllipsis, 
-    Dog, ShieldAlert, User, UserCircle} from "lucide-react"; 
-
-// Define a concrete type for accessibility details (example)
-interface AccessibilityDetails {
-    sight: string;
-    cane: boolean;
-    guideDog: boolean;
-}
+import { Phone, Mail, Languages, Accessibility, Eye, CircleEllipsis, 
+    Dog} from "lucide-react";
 
 // NOTE: You must update your 'Profile' interface to include fields for:
 // username, phone, email, languages (array of strings), and accessibility (AccessibilityDetails)

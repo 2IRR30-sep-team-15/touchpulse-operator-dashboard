@@ -57,9 +57,9 @@ function MyMap({ mapStyle }: { mapStyle: string}) {
 }
 
 
-function SelectLayer({ selectedStyle, setSelectedStyle }: { selectedStyle: string; setSelectedStyle: (value: any) => void }) {
+function SelectLayer({ selectedStyle, setSelectedStyle }: { selectedStyle: string; setSelectedStyle: (value: 'dark' | 'light' | 'satellite') => void }) {
     return (
-        <Select value={selectedStyle} onValueChange={(value) => setSelectedStyle(value as any)}>
+        <Select value={selectedStyle} onValueChange={(value) => setSelectedStyle(value as 'dark' | 'light' | 'satellite')}>
             <SelectTrigger className="bg-white w-full">
             <SelectValue placeholder="Select a layer" />
             </SelectTrigger>
