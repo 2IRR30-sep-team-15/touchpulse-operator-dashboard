@@ -1,6 +1,5 @@
 import React from 'react';
 import { MapPin, Minus, Dot, ArrowRight, BookMarked, Car } from 'lucide-react';
-import { Profile } from '@/lib/interfaces/profile';
 
 // Custom components to handle the dark input styling and structure shown in the image
 const DarkInput = ({

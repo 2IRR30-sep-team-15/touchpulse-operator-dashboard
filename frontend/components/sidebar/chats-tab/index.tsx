@@ -1,5 +1,4 @@
 import React from 'react';
-import { Profile } from '@/lib/interfaces/profile';
 import { ArrowRight } from 'lucide-react';
 
 interface ChatsTabProps {

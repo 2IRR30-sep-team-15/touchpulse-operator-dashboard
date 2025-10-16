@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Phone, MapPin } from 'lucide-react';
-import { Profile } from '@/lib/interfaces/profile';
 
 export default function ProfileItem({
   profile,

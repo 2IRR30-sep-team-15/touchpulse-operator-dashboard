@@ -1,4 +1,4 @@
-export interface Detail {
+interface Detail {
   email: string;
   phone: string;
   languages: string[];

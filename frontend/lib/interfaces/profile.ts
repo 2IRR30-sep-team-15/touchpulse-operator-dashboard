@@ -1,8 +1,4 @@
-import { Detail } from './detail';
-import { Chat } from './chat';
-import { Location } from './location';
-
-export interface Profile {
+interface Profile {
   name?: string;
   username?: string;
   image?: string;

@@ -16,8 +16,6 @@ import DetailsTab from '@/components/sidebar/details-tab';
 import ChatsTab from '@/components/sidebar/chats-tab';
 import CallTab from '@/components/sidebar/call-tab';
 
-import { Profile } from '@/lib/interfaces/profile';
-
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<
     'settings' | 'profiles' | 'details' | 'chats' | 'locations' | 'stuff'

@@ -2,7 +2,6 @@
 
 import SearchBar from '@/components/sidebar/profiles-tab/searchbar';
 import ProfileList from '@/components/sidebar/profiles-tab/profilelist';
-import { Profile } from '@/lib/interfaces/profile';
 import { useUsersQuery } from '@/lib/backend/users';
 
 export default function ProfilesTab({
