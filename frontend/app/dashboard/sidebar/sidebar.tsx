@@ -6,6 +6,8 @@ import ProfilesTab from "@/app/dashboard/sidebar/profiles-tab/profiles-tab";
 import DetailsTab from "@/app/dashboard/sidebar/details-tab/details-tab";
 import { Profile } from "@/lib/interfaces/profile";
 import ChatsTab from "./chats-tab/chats-tab";
+import LocationsTab from "./locations-tab/locations-tab";
+import CallTab from "./call-tab/call-tab";
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<
@@ -61,14 +63,9 @@ export default function Sidebar() {
         {activeTab === "locations" && (
           <div className="flex flex-col items-center justify-center h-full">
             {selectedProfile ? (
-              <>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {selectedProfile.name}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Locations placeholder
-                </p>
-              </>
+              <LocationsTab
+                profile={selectedProfile}
+              />
             ) : (
               <p>No profile selected</p>
             )}
@@ -78,14 +75,7 @@ export default function Sidebar() {
         {activeTab === "stuff" && (
           <div className="flex flex-col items-center justify-center h-full">
             {selectedProfile ? (
-              <>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {selectedProfile.name}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  stuff placeholder
-                </p>
-              </>
+              <CallTab/>
             ) : (
               <p>No profile selected</p>
             )}
