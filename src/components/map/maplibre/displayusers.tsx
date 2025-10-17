@@ -1,15 +1,23 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useContext } from 'react';
 import { Marker, Source, Layer, useMap } from 'react-map-gl/maplibre';
 import type { LineLayerSpecification } from 'react-map-gl/maplibre'
+import { SelectUserContext } from '@/context/SelectUserContext';
+import { MapControllerContext } from '@/context/MapControllerContext';
+import { SelectUserContextType, MapControllerContextType } from '@/lib/types/map';
 
-export function DisplayUsers({ users, selectedUser, setSelectedUser }: { users: Array<string>; selectedUser?: String; setSelectedUser: (value: any) => void }) {
+export function DisplayUsers() {
+    const { users, selectedUser } = useContext(SelectUserContext) as SelectUserContextType;
+    const { setMap } = useContext(MapControllerContext) as MapControllerContextType;
+    const { current: map } = useMap();
+    useEffect(() => setMap(map)); 
+
     // display all users if none is selected
     if (!selectedUser) {
         return (
             <>
                 {users.map((user, index) => (
                     <Fragment key={index}>
-                        <UserLocation user={user} setSelectedUser={setSelectedUser} />
+                        <UserLocation user={user} />
                         <UserRoute user={user} />
                     </Fragment>
                 ))}
@@ -20,15 +28,16 @@ export function DisplayUsers({ users, selectedUser, setSelectedUser }: { users: 
     // display only the selected user
     return (
         <>
-            <UserLocation user={selectedUser} setSelectedUser={setSelectedUser} />
+            <UserLocation user={selectedUser} />
             <UserRoute user={selectedUser} />
         </>
     )
 }
 
-function UserLocation({ user, setSelectedUser }: { user: String; setSelectedUser: (value: any) => void }) {
-    const {current: map} = useMap();
-    
+function UserLocation({ user }: { user: string }) {
+    const { setSelectedUser } = useContext(SelectUserContext) as SelectUserContextType;
+    const { focusUserOnMap } = useContext(MapControllerContext) as MapControllerContextType;
+
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -48,13 +57,13 @@ function UserLocation({ user, setSelectedUser }: { user: String; setSelectedUser
             onClick={(e) => {
                 e.originalEvent.stopPropagation();
                 setSelectedUser(user);
-                map?.easeTo({center: coordinates, zoom: 14});
+                focusUserOnMap(coordinates);
             }}
         />
     );
 }
 
-function UserRoute({ user }: { user: String }) {
+function UserRoute({ user }: { user: string }) {
     const [data, setData] = useState(null);
 
     useEffect(() => {

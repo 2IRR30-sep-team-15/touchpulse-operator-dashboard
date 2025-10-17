@@ -1,8 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Phone, MapPin } from "lucide-react";
 import { Profile } from "@/lib/interfaces/profile";
+import { useContext, useEffect, useState } from "react";
+import { MapControllerContext } from '@/context/MapControllerContext';
+import { MapControllerContextType } from '@/lib/types/map';
 
 export default function ProfileItem({ profile }: { profile: Profile }) {
+    const { focusUserOnMap } = useContext(MapControllerContext) as MapControllerContextType;
+    
+    // TODO: get coordinates from backend and preferably not here
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        fetch(`/data/location_${"user1"}.json`).then(res => res.json()).then(setData);
+    });
+
+    if (!data) return null;
+
+    const coordinates = data["coordinates"];
+
   return (
     <div className="flex items-center gap-3 py-3 px-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded transition-colors cursor-pointer">
 
@@ -25,7 +40,7 @@ export default function ProfileItem({ profile }: { profile: Profile }) {
             <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition" onClick={() => console.log("Call", profile.name)}>
             <Phone size={18} />
             </button>
-            <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition" onClick={() => console.log("Location", profile.name)}>
+            <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition" onClick={() => {console.log("Location", profile.name);focusUserOnMap(coordinates);}}>
             <MapPin size={18} />
             </button>
         </div>

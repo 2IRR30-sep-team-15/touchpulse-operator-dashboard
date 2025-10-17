@@ -1,15 +1,16 @@
 import { useContext } from 'react';
 import { Map, NavigationControl } from 'react-map-gl/maplibre';
 import { StyleContext } from '@/context/StyleContext';
-import { StyleContextType } from '@/lib/types/map';
+import { StyleContextType, SelectUserContextType } from '@/lib/types/map';
+import { SelectUserContext } from '@/context/SelectUserContext';
 import { DisplayUsers } from '@/components/map/maplibre/displayusers';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 
-export default function MyMap({ users, selectedUser, setSelectedUser }:
-    { users: Array<string>; selectedUser?: String; setSelectedUser: (value: any) => void }) {
+export default function MyMap() {
     
     const { styles, selectedStyle } = useContext(StyleContext) as StyleContextType;
+    const { setSelectedUser } = useContext(SelectUserContext) as SelectUserContextType;
 
     return (
         <Map
@@ -22,7 +23,7 @@ export default function MyMap({ users, selectedUser, setSelectedUser }:
             mapStyle={styles[selectedStyle]}
             onClick={() => setSelectedUser(undefined)}
         >
-            <DisplayUsers users={users} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+            <DisplayUsers />
             <NavigationControl />
         </Map>
     );
