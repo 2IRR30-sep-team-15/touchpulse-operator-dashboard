@@ -4,6 +4,7 @@ import type { LineLayerSpecification } from 'react-map-gl/maplibre'
 import { SelectUserContext } from '@/context/SelectUserContext';
 import { MapControllerContext } from '@/context/MapControllerContext';
 import { SelectUserContextType, MapControllerContextType } from '@/lib/types/map';
+import { Profile } from "@/lib/interfaces/profile"
 
 export function DisplayUsers() {
     const { users, selectedUser } = useContext(SelectUserContext) as SelectUserContextType;
@@ -15,7 +16,8 @@ export function DisplayUsers() {
     if (!selectedUser) {
         return (
             <>
-                {users.map((user, index) => (
+                {/* TODO: get data from backend, shows only the first 3 temporarily while not connected to backend */}
+                {users.slice(0, 3).map((user, index) => (
                     <Fragment key={index}>
                         <UserLocation user={user} />
                         <UserRoute user={user} />
@@ -34,14 +36,14 @@ export function DisplayUsers() {
     )
 }
 
-function UserLocation({ user }: { user: string }) {
+function UserLocation({ user }: { user: Profile }) {
     const { setSelectedUser } = useContext(SelectUserContext) as SelectUserContextType;
     const { focusUserOnMap } = useContext(MapControllerContext) as MapControllerContextType;
 
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        fetch(`/data/location_${user}.json`).then(res => res.json()).then(setData);
+        fetch(`/data/location_${user.id}.json`).then(res => res.json()).then(setData);
     });
 
     if (!data) return null;
@@ -63,17 +65,17 @@ function UserLocation({ user }: { user: string }) {
     );
 }
 
-function UserRoute({ user }: { user: string }) {
+function UserRoute({ user }: { user: Profile }) {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        fetch(`/data/route_${user}.geojson`).then(res => res.json()).then(setData);
+        fetch(`/data/route_${user.id}.geojson`).then(res => res.json()).then(setData);
     });
 
     if (!data) return null;
 
     const routeLayer : LineLayerSpecification = {
-        id: `route_${user}`,
+        id: `route_${user.id}`,
         type: 'line',
         source: 'maplibre',
         paint: {
@@ -87,7 +89,7 @@ function UserRoute({ user }: { user: string }) {
     }
     
     return (
-        <Source id={`route_${user}`} type="geojson" data={data}>
+        <Source id={`route_${user.id}`} type="geojson" data={data}>
             <Layer {...routeLayer} />
         </Source>
     );

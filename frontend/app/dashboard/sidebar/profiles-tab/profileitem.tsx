@@ -14,16 +14,23 @@ export default function ProfileItem({
     }) {
 
     const { focusUserOnMap } = useContext(MapControllerContext) as MapControllerContextType;
-    
-    // TODO: get coordinates from backend and preferably not here
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        fetch(`/data/location_${"user1"}.json`).then(res => res.json()).then(setData);
-    });
 
-    if (!data) return null;
+    const handleLocation = async () => {
+        console.log('Do location logic: ', profile.name);
 
-    const coordinates = data["coordinates"];
+        try {
+            // TODO: get data from backend
+            const res = await fetch(`/data/location_${profile.id}.json`);
+            const data = await res.json();
+
+            if (data) {
+                const coordinates = data["coordinates"];
+                focusUserOnMap(coordinates);
+            }
+        } catch {
+            console.log("Couldn't fetch location for user: ", profile.name);
+        }
+    };
     
     return (
         <div className="flex items-center gap-3 py-3 px-2 transition-colors" onClick={() => onSelect?.(profile)}>
@@ -47,7 +54,8 @@ export default function ProfileItem({
                 <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition" onClick={() => console.log("Call", profile.name)}>
                 <Phone size={18} />
                 </button>
-                <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition" onClick={() => {console.log("Location", profile.name);focusUserOnMap(coordinates);}}>
+                <button className="p-2 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+                    onClick={() => handleLocation()}>
                 <MapPin size={18} />
                 </button>
             </div>

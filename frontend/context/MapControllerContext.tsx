@@ -9,7 +9,6 @@ const MapControllerProvider: FC<{children: ReactNode}> = ({ children }) => {
 
     const focusUserOnMap = (coordinates: LngLatLike) => {
         map?.easeTo({center: coordinates, zoom: 14});
-        console.log(map);
     }
 
     return <MapControllerContext value = {{ map, setMap, focusUserOnMap }}>{children}</MapControllerContext>
