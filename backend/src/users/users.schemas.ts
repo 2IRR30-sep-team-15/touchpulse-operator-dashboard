@@ -15,7 +15,7 @@ export const userSchema = new Schema<User>(
       type: 'string',
     },
     email: {
-      type: 'string',
+      type: 'text',
     },
     provider: {
       type: 'string',

@@ -9,9 +9,12 @@ export class RedisService implements OnModuleInit {
   constructor(private config: ConfigService) {}
 
   async onModuleInit() {
-    const redisHost = this.config.get<string>('REDIS_HOST');
-    const redisPort = this.config.get<number>('REDIS_PORT');
-    const redisPassword = this.config.get<string>('REDIS_PASSWORD');
+    const redisHost = this.config.get<string>('REDIS_HOST', 'localhost');
+    const redisPort = this.config.get<number>('REDIS_PORT', 6379);
+    const redisPassword = this.config.get<string>(
+      'REDIS_PASSWORD',
+      'yourpassword',
+    );
 
     console.log(`Connecting to Redis at ${redisHost}:${redisPort}`);
 

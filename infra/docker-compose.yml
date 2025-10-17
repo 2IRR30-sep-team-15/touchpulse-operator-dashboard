@@ -3,8 +3,6 @@ services:
   redis:
     image: redis/redis-stack:latest # includes Redis Search for Redis OM to work
     restart: always
-    ports:
-      - "6379:6379"
     volumes:
       - db_value:/data
     environment:
@@ -13,8 +11,6 @@ services:
   backend:
     build: ../backend
     restart: always
-    ports:
-      - "8080:8080"
     depends_on:
       - redis
     env_file:
@@ -23,10 +19,10 @@ services:
   frontend:
     build: ../frontend
     restart: always
-    ports:
-      - "3000:3000"
     depends_on:
       - backend
+    environment:
+      - NEXT_PUBLIC_BASE_BACKEND_URL='http://localhost'
 
   nginx:
     image: nginx:1.19.3
