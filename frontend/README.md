@@ -20,6 +20,17 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment Variables
+
+The application requires the following environment variables:
+
+- `PROXY_TARGET_URL`: Target URL for the API proxy (required)
+- `NODE_ENV`: Node environment (development/production)
+
+### API Proxy
+
+The application includes an API proxy route (`/api/[...proxy]`) that forwards requests to the backend API. This is configured via the `PROXY_TARGET_URL` environment variable.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
