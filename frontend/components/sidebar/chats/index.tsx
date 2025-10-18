@@ -2,15 +2,15 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 interface ChatsTabProps {
-  profile: Profile;
+  user: User;
 }
 
-export default function ChatsTab({ profile }: ChatsTabProps) {
-  const chats = profile.chats;
+export default function ChatsTab({ user }: ChatsTabProps) {
+  const chats = user.chats;
 
   return (
     <div className="flex flex-col h-full space-y-6 overflow-y-auto">
-      <h2 className="text-xl">Chats for {profile.name}</h2>
+      <h2 className="text-xl">Chats for {user.settings.nickname}</h2>
 
       <div className=""></div>
 

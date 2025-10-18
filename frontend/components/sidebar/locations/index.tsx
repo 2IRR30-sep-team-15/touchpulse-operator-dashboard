@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Minus, Dot, ArrowRight, BookMarked, Car } from 'lucide-react';
+import { MapPin, Minus, Dot, Car } from 'lucide-react';
 
 // Custom components to handle the dark input styling and structure shown in the image
 const DarkInput = ({
@@ -20,7 +20,7 @@ const DarkInput = ({
   </div>
 );
 
-export default function LocationsTab({ profile }: { profile: Profile }) {
+export default function LocationsTab({ profile }: { profile: User }) {
   const savedLocations = profile.locations;
 
   // We'll use the profile's name and a fictional route name for placeholders
