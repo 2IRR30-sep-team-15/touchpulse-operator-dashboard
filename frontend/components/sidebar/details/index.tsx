@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {
-  Phone,
   Mail,
   Languages,
   Accessibility,
@@ -10,9 +9,13 @@ import {
   Dog,
 } from 'lucide-react';
 
-export default function DetailsTab({ profile }: { profile: Profile }) {
+interface DetailsTabProps {
+  user: User;
+}
+
+export default function DetailsTab({ user }: DetailsTabProps) {
   // Helper function for the initial fallback text
-  const fallbackInitials = profile.name
+  const fallbackInitials = user.settings.nickname
     ?.split(' ')
     .map((n) => n[0])
     .join('');
@@ -37,13 +40,13 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center gap-3">
           <Avatar className="w-12 h-12">
-            {profile.image && <AvatarImage src={profile.image} />}
+            {user.image && <AvatarImage src={user.image} />}
             <AvatarFallback>{fallbackInitials}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-semibold text-lg">{profile.name}</p>
+            <p className="font-semibold text-lg">{user.settings.nickname}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              @{profile.username}
+              @{user.settings.nickname}
             </p>
           </div>
         </div>
@@ -61,13 +64,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
         {/* Email */}
         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
           <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-sm">{profile.email}</p>
-        </div>
-
-        {/* Phone */}
-        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
-          <Phone className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-sm">{profile.details?.phone}</p>
+          <p className="text-sm">{user.email}</p>
         </div>
       </section>
 
@@ -77,15 +74,12 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
           <Languages className="w-5 h-5" /> Languages
         </h3>
         <div className="flex gap-2 ml-7">
-          {profile.details?.languages.map((lang, index) => (
-            <Badge
-              key={index}
-              variant="default"
-              className="bg-black text-white hover:bg-black/90"
-            >
-              {lang}
-            </Badge>
-          ))}
+          <Badge
+            variant="default"
+            className="bg-black text-white hover:bg-black/90"
+          >
+            {user.settings.language}
+          </Badge>
         </div>
       </section>
 
@@ -103,7 +97,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <p>Sight:</p>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              {profile.details?.sight}
+              {user.demographic.sight_status}
             </p>
           </div>
 
@@ -114,7 +108,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <CircleEllipsis className="w-4 h-4 text-gray-400 dark:text-gray-500" />
               <p>Cane:</p>
             </div>
-            {profile.details?.cane && renderBooleanBadge(profile.details?.cane)}
+            {renderBooleanBadge(user.demographic.uses_cane)}
           </div>
 
           {/* Guide Dog */}
@@ -123,8 +117,7 @@ export default function DetailsTab({ profile }: { profile: Profile }) {
               <Dog className="w-4 h-4 text-gray-400 dark:text-gray-500" />
               <p>Guide Dog:</p>
             </div>
-            {profile.details?.guideDog &&
-              renderBooleanBadge(profile.details?.guideDog)}
+            {renderBooleanBadge(user.demographic.uses_guide_dog)}
           </div>
         </div>
       </section>

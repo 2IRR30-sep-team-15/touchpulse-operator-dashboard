@@ -15,9 +15,9 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
-  @Post()
+  @Post('sync')
   @HttpCode(201)
-  create() {
-    return this.usersService.create();
+  sync() {
+    return this.usersService.sync();
   }
 }

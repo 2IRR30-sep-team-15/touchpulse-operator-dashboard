@@ -18,8 +18,8 @@ export const useUsersQuery = (props: UsersQueryProps = {}) => {
     queryParams.length > 0 ? '?' + queryParams.join('&') : ''
   }`;
 
-  const call = async (): Promise<Profile[]> => {
-    const response = await fetchWithAuth<Profile[]>(urlWithParams);
+  const call = async (): Promise<User[]> => {
+    const response = await fetchWithAuth<User[]>(urlWithParams);
 
     return response.data;
   };

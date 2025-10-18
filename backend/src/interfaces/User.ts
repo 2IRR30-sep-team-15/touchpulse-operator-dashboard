@@ -1,4 +1,9 @@
-interface User {
+import { Entity } from 'redis-om';
+import { Demographic } from './Demographic';
+import { Setting } from './Setting';
+import { NavigationSetting } from './NavigationSetting';
+
+export interface User extends Entity {
   id: string;
   demographic: Demographic;
   demographic_id: string;
@@ -10,7 +15,4 @@ interface User {
   provider: 'google' | 'apple';
   sessions: string[];
   created_at: number;
-
-  chat?: Chat[];
-  locations?: Location[];
 }

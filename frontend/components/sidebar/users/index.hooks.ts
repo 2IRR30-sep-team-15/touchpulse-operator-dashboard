@@ -1,11 +1,11 @@
 import { useUsersQuery } from '@/lib/backend/users';
 import { useState } from 'react';
 
-export const useProfiles = () => {
+export const useUsers = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const {
-    data: profiles,
+    data: users,
     isLoading,
     isError,
   } = useUsersQuery({
@@ -13,7 +13,7 @@ export const useProfiles = () => {
   });
 
   return {
-    profiles: profiles ?? [],
+    users: users ?? [],
     isLoading,
     isError,
     searchQuery,

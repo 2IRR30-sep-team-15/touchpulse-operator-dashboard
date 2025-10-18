@@ -11,7 +11,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <Input
-      placeholder="Search profiles..."
+      placeholder="Search users..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
       className="focus-visible:ring-0 hover:bg-accent duration-100"
