@@ -11,23 +11,23 @@ import {
 } from 'lucide-react';
 
 import LocationsTab from '@/components/sidebar/locations';
-import ProfilesTab from '@/components/sidebar/profiles';
+import UsersTab from '@/components/sidebar/users';
 import DetailsTab from '@/components/sidebar/details';
 import ChatsTab from '@/components/sidebar/chats';
 import CallTab from '@/components/sidebar/call';
 
 type TabType =
   | 'settings'
-  | 'profiles'
+  | 'users'
   | 'details'
   | 'chats'
   | 'locations'
-  | 'stuff';
+  | 'call';
 
 export default function Sidebar() {
-  const [activeTab, setActiveTab] = useState<TabType>('profiles');
+  const [activeTab, setActiveTab] = useState<TabType>('users');
 
-  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   return (
     <aside className="h-screen bg-gray-100 dark:bg-gray-900 p-4 flex flex-col border-r">
@@ -39,10 +39,10 @@ export default function Sidebar() {
           </div>
         )}
 
-        {activeTab === 'profiles' && (
-          <ProfilesTab
-            onSelectProfile={(profile) => {
-              setSelectedProfile(profile);
+        {activeTab === 'users' && (
+          <UsersTab
+            onSelectUser={(user) => {
+              setSelectedUser(user);
               setActiveTab('details');
             }}
           />
@@ -50,37 +50,37 @@ export default function Sidebar() {
 
         {activeTab === 'details' && (
           <div className="flex flex-col items-center justify-center h-full w-full">
-            {selectedProfile ? (
-              <DetailsTab profile={selectedProfile} />
+            {selectedUser ? (
+              <DetailsTab user={selectedUser} />
             ) : (
-              <p>No profile selected</p>
+              <p>No user selected</p>
             )}
           </div>
         )}
 
         {activeTab === 'chats' && (
           <div className="flex flex-col items-center justify-center h-full">
-            {selectedProfile ? (
-              <ChatsTab profile={selectedProfile} />
+            {selectedUser ? (
+              <ChatsTab user={selectedUser} />
             ) : (
-              <p>No profile selected</p>
+              <p>No user selected</p>
             )}
           </div>
         )}
 
         {activeTab === 'locations' && (
           <div className="flex flex-col items-center justify-center h-full">
-            {selectedProfile ? (
-              <LocationsTab profile={selectedProfile} />
+            {selectedUser ? (
+              <LocationsTab profile={selectedUser} />
             ) : (
-              <p>No profile selected</p>
+              <p>No user selected</p>
             )}
           </div>
         )}
 
-        {activeTab === 'stuff' && (
+        {activeTab === 'call' && (
           <div className="flex flex-col items-center justify-center h-full">
-            {selectedProfile ? <CallTab /> : <p>No profile selected</p>}
+            {selectedUser ? <CallTab /> : <p>No user selected</p>}
           </div>
         )}
       </div>
@@ -96,9 +96,9 @@ export default function Sidebar() {
         </Button>
 
         <Button
-          variant={activeTab === 'profiles' ? 'default' : 'ghost'}
+          variant={activeTab === 'users' ? 'default' : 'ghost'}
           size="icon"
-          onClick={() => setActiveTab('profiles')}
+          onClick={() => setActiveTab('users')}
         >
           <Search className="h-5 w-5" />
         </Button>
@@ -131,9 +131,9 @@ export default function Sidebar() {
         </Button>
 
         <Button
-          variant={activeTab === 'stuff' ? 'default' : 'ghost'}
+          variant={activeTab === 'call' ? 'default' : 'ghost'}
           size="icon"
-          onClick={() => setActiveTab('stuff')}
+          onClick={() => setActiveTab('call')}
         >
           <Video className="h-5 w-5" />
         </Button>

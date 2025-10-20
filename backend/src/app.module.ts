@@ -7,6 +7,7 @@ import { RedisModule } from './redis/redis.module';
 import { AuthModule } from './auth/auth.module';
 import { OperatorsService } from './operators/operators.service';
 import { OperatorsController } from './operators/operators.controller';
+import { TouchpulseModule } from './touchpulse/touchpulse.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { OperatorsController } from './operators/operators.controller';
     RedisModule,
     UsersModule,
     AuthModule,
+    TouchpulseModule,
   ],
   controllers: [AppController, OperatorsController],
   providers: [OperatorsService],
