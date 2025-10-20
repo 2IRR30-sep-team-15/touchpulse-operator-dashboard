@@ -5,13 +5,13 @@ import * as _ from 'lodash';
 const axios = middlewareAxios();
 
 const getBearerTokenConfig = () => {
-  const token = localStorage.getItem('access');
+  const access_token = localStorage.getItem('access_token');
   const headers: Record<string, string> = {
     'ngrok-skip-browser-warning': 'true',
   };
 
-  if (token) {
-    return { headers: { ...headers, Authorization: `Bearer ${token}` } };
+  if (access_token) {
+    return { headers: { ...headers, Authorization: `Bearer ${access_token}` } };
   }
   return {};
 };

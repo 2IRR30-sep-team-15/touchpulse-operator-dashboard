@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { JwtCreateDto } from './dto/jwt-create.dto';
 import { JwtVerifyDto } from './dto/jwt-verify.dto';
 
-@Controller('auth/jwt')
+@Controller('api/auth/jwt')
 export class AuthController {
   constructor(private authService: AuthService) {}
 

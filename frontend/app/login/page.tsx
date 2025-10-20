@@ -1,99 +1,31 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import LoginForm from '@/components/login';
+import { Pin } from 'lucide-react';
 
-export default function LoginPage() {
-  const users = [
-    { username: 'user1', password: 'pass123' },
-    { username: 'user2', password: 'abc456' },
-    { username: 'admin', password: 'admin' },
-  ];
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
-
-  const handleLogin = () => {
-    const matchedUser = users.find(
-      (user) => user.username === username && user.password === password,
-    );
-    if (matchedUser) {
-      router.push('../dashboard');
-    } else {
-      alert('Invalid username or password.');
-    }
-  };
-
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const handleUserEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      passwordRef.current?.focus();
-    }
-  };
-
-  const handlePasswordEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleLogin();
-    }
-  };
-
+const LoginTemplate = () => {
   return (
-    <div className="w-screen h-screen flex">
-      {/* Left dark side */}
-      <div className="flex-1" style={{ backgroundColor: '#0d1e2e' }}></div>
-      {/* Right login form */}
-      <div className="flex-1 flex items-center justify-center bg-white p-8">
-        <div className="w-full max-w-md text-left text-gray-900">
-          <h2 className="text-2xl font-bold">Login</h2>
-          <p className="mb-4 text-gray-600">
-            Enter your details below to login
-          </p>
-
-          {/* Username text box */}
-          {/* <p className="font-bold">
-            Username
-          </p> */}
-          <div className="mb-4">
-            <input
-              type="text"
-              required
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onKeyDown={handleUserEnter}
-              className="w-full px-4 py-2 border rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
+    <div className="container relative grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+        <div className="absolute inset-0 bg-foreground" />
+        <div className="relative z-20 flex items-center text-lg font-medium">
+          <Pin className="mr-2 h-8 w-8" />
+          Pathway Dashboard
+        </div>
+      </div>
+      <div className="lg:p-8">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+          <div className="flex flex-col space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
+            <p className="text-sm text-muted-foreground">
+              Log in to your account
+            </p>
           </div>
-
-          {/* Password text box */}
-          {/* <p className="font-bold">
-            Password
-          </p> */}
-          <div className="mb-4">
-            <input
-              type="password"
-              required
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              ref={passwordRef}
-              onKeyDown={handlePasswordEnter}
-              className="w-full px-4 py-2 border rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          </div>
-
-          {/* Login button */}
-          <button
-            type="button"
-            onClick={handleLogin}
-            className="w-full px-4 py-2 bg-[#ffb100] text-white rounded-lg transition-colors duration-300"
-          >
-            Login
-          </button>
+          <LoginForm />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default LoginTemplate;
