@@ -24,7 +24,7 @@ export default function LocationsTab({ profile }: { profile: User }) {
   const savedLocations = profile.locations;
 
   // We'll use the profile's name and a fictional route name for placeholders
-  const defaultRouteName = `${profile.name}'s Typical Route`;
+  const defaultRouteName = `${profile.email}'s Typical Route`;
 
   return (
     <div className="flex flex-col h-full p-4 space-y-6 overflow-y-auto dark:text-white">

@@ -1,7 +1,5 @@
 'use client';
-
 import LoadingThreeDots from '@/components/common/loading-three-dots';
-
 import UsersList from './user-list';
 import { useUsers } from './index.hooks';
 import SearchBar from './search-bar';
