@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff, PhoneOff, PhoneCall } from 'lucide-react';
+import { connect, Room } from 'livekit-client';
 
 // Simplified type for the component's state
 type ControlState = {
@@ -8,11 +9,28 @@ type ControlState = {
   isCalling: boolean;
 };
 
+const liveKitRoom: Room | null = null;
+
+async function connectToCallRoom(token: string) {
+  if (liveKitRoom) {
+    liveKitRoom.disconnect();
+  }
+
+  // liveKitRoom = await connect('')
+}
+
 export default function CallTab() {
   const [controls, setControls] = useState<ControlState>({
     isMuted: false,
     isCalling: false,
   });
+  const [roomInstance] = useState(
+    () =>
+      new Room({
+        adaptiveStream: true,
+        dynacast: true,
+      }),
+  );
 
   // Unified toggle function
   const toggleControl = (key: 'isMuted') => {
@@ -20,14 +38,39 @@ export default function CallTab() {
   };
 
   const handleEndCall = () => {
+    roomInstance.disconnect();
     setControls((prev) => ({ ...prev, isCalling: false }));
     console.log('Call Ended.');
   };
 
-  const handleStartCall = () => {
+  async function handleStartCall() {
+    try {
+      const roomId = 'room-123';
+      const operatorId = 'operator-1';
+      const livekitURL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
+
+      if (!livekitURL) {
+        throw new Error('LiveKit URL is not defined');
+      }
+
+      const response = await fetch(
+        `http://localhost:8080/api/communication/token?room=${encodeURIComponent(roomId)}&username=${encodeURIComponent(operatorId)}`,
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch call token');
+      }
+
+      const data = await response.json();
+      if (data.token) {
+        await roomInstance.connect(livekitURL, data.token);
+      }
+    } catch (err) {
+      console.error(err);
+    }
     setControls((prev) => ({ ...prev, isCalling: true }));
     console.log('Call Initiated.');
-  };
+  }
 
   // Derived values for the primary call button
   const PrimaryCallButtonIcon = controls.isCalling ? PhoneOff : PhoneCall;
@@ -68,11 +111,10 @@ export default function CallTab() {
           // Applying the required custom vertical layout and sizing classes
           className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
                                 shadow-lg font-semibold text-xs sm:text-sm w-full max-w-[80px] h-16 sm:h-20
-                                ${
-                                  controls.isMuted
-                                    ? 'bg-red-500 hover:bg-red-600'
-                                    : 'bg-gray-700/50 hover:bg-gray-600/50'
-                                }
+                                ${controls.isMuted
+              ? 'bg-red-500 hover:bg-red-600'
+              : 'bg-gray-700/50 hover:bg-gray-600/50'
+            }
                                 `}
         >
           {controls.isMuted ? (
