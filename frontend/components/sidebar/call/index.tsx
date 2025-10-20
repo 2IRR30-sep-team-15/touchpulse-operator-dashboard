@@ -6,6 +6,10 @@ import {
   TrackToggle,
   RoomAudioRenderer,
   RoomContext,
+  useTracks,
+  GridLayout,
+  ParticipantTile,
+  useRoomContext,
 } from '@livekit/components-react';
 import '@livekit/components-styles';
 
@@ -81,23 +85,7 @@ export default function CallTab() {
   return (
     <RoomContext.Provider value={roomInstance}>
       <div className="flex flex-col w-full h-full p-4 space-y-4 dark:bg-gray-900 dark:text-white">
-        {/* 1. Video Display Area (Vertical 3:4 Aspect Ratio) */}
-        <div className="flex justify-center w-full flex-grow">
-          <div
-            className="w-full bg-black/80 rounded-2xl relative overflow-hidden shadow-2xl"
-            style={{ aspectRatio: '3 / 4' }}
-          >
-            <div className="flex flex-col items-center justify-center h-full text-white/30">
-              <div className="w-20 h-20 rounded-full bg-gray-700 mb-2 animate-pulse"></div>
-              <p className="text-sm mt-1">Simulating live video feed...</p>
-            </div>
-
-            {/* Status Overlay */}
-            <div className="absolute top-4 left-4 text-white text-lg font-semibold bg-black/30 px-3 py-1 rounded-lg">
-              {controls.isCalling ? 'Call Active' : 'Idle'}
-            </div>
-          </div>
-        </div>
+        <MyVideoConference />
 
         {/* 2. Controls Area */}
         <div className="flex justify-around items-center">
@@ -140,5 +128,53 @@ export default function CallTab() {
         {/* <ControlBar /> */}
       </div>
     </RoomContext.Provider>
+  );
+}
+
+function MyVideoConference(controls: ControlState) {
+  const room = useRoomContext();
+
+  // `useTracks` returns all camera and screen share tracks. If a user
+  // joins without a published camera track, a placeholder track is returned.
+  const tracks = useTracks(
+    [{ source: Track.Source.Camera, withPlaceholder: true }],
+    { onlySubscribed: false },
+  );
+
+  const remoteParticiants = room.remoteParticipants;
+  if (remoteParticiants.size === 0) {
+    return (
+      //  1. Video Display Area (Vertical 3:4 Aspect Ratio)
+      <div className="flex justify-center w-full flex-grow">
+        <div
+          className="w-full bg-black/80 rounded-2xl relative overflow-hidden shadow-2xl"
+          style={{ aspectRatio: '3 / 4' }}
+        >
+          <div className="flex flex-col items-center justify-center h-full text-white/30">
+            <div className="w-20 h-20 rounded-full bg-gray-700 mb-2 animate-pulse"></div>
+            <p className="text-sm mt-1">Simulating live video feed...</p>
+          </div>
+
+          {/* Status Overlay */}
+          <div className="absolute top-4 left-4 text-white text-lg font-semibold bg-black/30 px-3 py-1 rounded-lg">
+            {controls.isCalling ? 'Call Active' : 'Idle'}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const filteredTracks = tracks.filter((track) => {
+    return track.participant.identity !== room.localParticipant.identity;
+  });
+  return (
+    <GridLayout
+      tracks={filteredTracks}
+      style={{ height: 'calc(100vh - var(--lk-control-bar-height))' }}
+    >
+      {/* The GridLayout accepts zero or one child. The child is used
+      as a template to render all passed in tracks. */}
+      <ParticipantTile />
+    </GridLayout>
   );
 }
