@@ -1,6 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { MapControllerContext } from '@/context/MapControllerContext';
+import { MapControllerContextType } from '@/lib/types/map';
 import { Phone, MapPin } from 'lucide-react';
+import { useContext } from 'react';
 
 interface UserItemProps {
   user: User;
@@ -10,13 +13,28 @@ interface UserItemProps {
 
 export default function UserItem({ user, onSelect }: UserItemProps) {
   const handleCall = () => {
-    console.log('Do call logic: ', user.name);
+    console.log('Do call logic: ', user.settings.nickname);
   };
+  const { focusUserOnMap } = useContext(
+    MapControllerContext,
+  ) as MapControllerContextType;
 
-  const handleLocation = () => {
-    console.log('Do location logic: ', user.name);
+  const handleLocation = async () => {
+    console.log('Do location logic: ', user.settings.nickname);
+
+    try {
+      // TODO: get data from backend
+      const res = await fetch(`/data/location_${user.id}.json`);
+      const data = await res.json();
+
+      if (data) {
+        const coordinates = data['coordinates'];
+        focusUserOnMap(coordinates);
+      }
+    } catch {
+      console.log("Couldn't fetch location for user: ", user.settings.nickname);
+    }
   };
-
   return (
     <div
       className="flex items-center gap-3 py-3 px-2 transition-colors"
@@ -24,7 +42,7 @@ export default function UserItem({ user, onSelect }: UserItemProps) {
     >
       {/* profile picture */}
       <Avatar>
-        {user.image && <AvatarImage src={user.image} />}
+        {user?.image && <AvatarImage src={user?.image} />}
         <AvatarFallback>
           {user.settings.nickname
             ?.split(' ')
