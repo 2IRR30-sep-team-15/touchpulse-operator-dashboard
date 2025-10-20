@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, MicOff, PhoneOff, PhoneCall } from 'lucide-react';
-import { connect, Room } from 'livekit-client';
+import { PhoneOff, PhoneCall } from 'lucide-react';
+import { Track, Room } from 'livekit-client';
+import {
+  TrackToggle,
+  RoomAudioRenderer,
+  RoomContext,
+} from '@livekit/components-react';
+import '@livekit/components-styles';
 
 // Simplified type for the component's state
 type ControlState = {
@@ -9,19 +15,9 @@ type ControlState = {
   isCalling: boolean;
 };
 
-const liveKitRoom: Room | null = null;
-
-async function connectToCallRoom(token: string) {
-  if (liveKitRoom) {
-    liveKitRoom.disconnect();
-  }
-
-  // liveKitRoom = await connect('')
-}
-
 export default function CallTab() {
   const [controls, setControls] = useState<ControlState>({
-    isMuted: false,
+    isMuted: true,
     isCalling: false,
   });
   const [roomInstance] = useState(
@@ -83,63 +79,66 @@ export default function CallTab() {
     : handleStartCall;
 
   return (
-    <div className="flex flex-col w-full h-full p-4 space-y-4 dark:bg-gray-900 dark:text-white">
-      {/* 1. Video Display Area (Vertical 3:4 Aspect Ratio) */}
-      <div className="flex justify-center w-full flex-grow">
-        <div
-          className="w-full bg-black/80 rounded-2xl relative overflow-hidden shadow-2xl"
-          style={{ aspectRatio: '3 / 4' }}
-        >
-          <div className="flex flex-col items-center justify-center h-full text-white/30">
-            <div className="w-20 h-20 rounded-full bg-gray-700 mb-2 animate-pulse"></div>
-            <p className="text-sm mt-1">Simulating live video feed...</p>
-          </div>
+    <RoomContext.Provider value={roomInstance}>
+      <div className="flex flex-col w-full h-full p-4 space-y-4 dark:bg-gray-900 dark:text-white">
+        {/* 1. Video Display Area (Vertical 3:4 Aspect Ratio) */}
+        <div className="flex justify-center w-full flex-grow">
+          <div
+            className="w-full bg-black/80 rounded-2xl relative overflow-hidden shadow-2xl"
+            style={{ aspectRatio: '3 / 4' }}
+          >
+            <div className="flex flex-col items-center justify-center h-full text-white/30">
+              <div className="w-20 h-20 rounded-full bg-gray-700 mb-2 animate-pulse"></div>
+              <p className="text-sm mt-1">Simulating live video feed...</p>
+            </div>
 
-          {/* Status Overlay */}
-          <div className="absolute top-4 left-4 text-white text-lg font-semibold bg-black/30 px-3 py-1 rounded-lg">
-            {controls.isCalling ? 'Call Active' : 'Idle'}
+            {/* Status Overlay */}
+            <div className="absolute top-4 left-4 text-white text-lg font-semibold bg-black/30 px-3 py-1 rounded-lg">
+              {controls.isCalling ? 'Call Active' : 'Idle'}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* 2. Controls Area */}
-      <div className="flex justify-around items-center">
-        {/* Mute/Unmute Button (Uses custom classes for the vertical stack look) */}
-        <Button
-          onClick={() => toggleControl('isMuted')}
-          aria-label={controls.isMuted ? 'Unmute' : 'Mute'}
-          // Applying the required custom vertical layout and sizing classes
-          className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
+        {/* 2. Controls Area */}
+        <div className="flex justify-around items-center">
+          <TrackToggle
+            onChange={(enabled, isUserInitiated) => {
+              console.log('Enabled: ', enabled, 'isMuted', controls.isMuted);
+              if (isUserInitiated) {
+                toggleControl('isMuted');
+              }
+            }}
+            aria-label={controls.isMuted ? 'Unmute' : 'Mute'}
+            source={Track.Source.Microphone}
+            className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
                                 shadow-lg font-semibold text-xs sm:text-sm w-full max-w-[80px] h-16 sm:h-20
                                 ${controls.isMuted
-              ? 'bg-red-500 hover:bg-red-600'
-              : 'bg-gray-700/50 hover:bg-gray-600/50'
-            }
+                ? 'bg-red-500 hover:bg-red-600'
+                : 'bg-gray-700/50 hover:bg-gray-600/50'
+              }
                                 `}
-        >
-          {controls.isMuted ? (
-            <MicOff className="w-6 h-6 mb-1" />
-          ) : (
-            <Mic className="w-6 h-6 mb-1" />
-          )}
-          <span className="hidden sm:inline">
-            {controls.isMuted ? 'Unmute' : 'Mute'}
-          </span>
-        </Button>
+          >
+            <span className="hidden sm:inline mt-4">
+              {controls.isMuted ? 'Unmute' : 'Mute'}
+            </span>
+          </TrackToggle>
 
-        {/* Primary Action Button (End/Start Call) */}
-        <Button
-          onClick={PrimaryCallButtonHandler}
-          aria-label={PrimaryCallButtonLabel}
-          // Applying the required custom vertical layout and sizing classes
-          className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
+          {/* Primary Action Button (End/Start Call) */}
+          <Button
+            onClick={PrimaryCallButtonHandler}
+            aria-label={PrimaryCallButtonLabel}
+            // Applying the required custom vertical layout and sizing classes
+            className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
                                 ${PrimaryCallButtonClasses} shadow-xl font-bold text-xs sm:text-sm 
                                 w-full max-w-[80px] h-16 sm:h-20`}
-        >
-          <PrimaryCallButtonIcon className="w-6 h-6 mb-1" />
-          <span className="hidden sm:inline">{PrimaryCallButtonLabel}</span>
-        </Button>
+          >
+            <PrimaryCallButtonIcon className="w-6 h-6 mb-1" />
+            <span className="hidden sm:inline">{PrimaryCallButtonLabel}</span>
+          </Button>
+        </div>
+        <RoomAudioRenderer />
+        {/* <ControlBar /> */}
       </div>
-    </div>
+    </RoomContext.Provider>
   );
 }
