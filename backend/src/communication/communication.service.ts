@@ -1,19 +1,22 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { AccessToken } from 'livekit-server-sdk';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CommunicationService {
   private apiKey: string;
   private apiSecret: string;
 
-  constructor() {
-    if (!process.env.LIVEKIT_API_KEY || !process.env.LIVEVKIT_API_SECRET) {
+  constructor(private configService: ConfigService) {
+    const key = this.configService.get<string>('LIVEKIT_API_KEY');
+    const secret = this.configService.get<string>('LIVEKIT_API_SECRET');
+    if (!key || !secret) {
       throw new InternalServerErrorException(
         'LiveKit API key/secret not configured',
       );
     }
-    this.apiKey = process.env.LIVEKIT_API_KEY;
-    this.apiSecret = process.env.LIVEVKIT_API_SECRET;
+    this.apiKey = key;
+    this.apiSecret = secret;
   }
 
   getToken(roomName: string, participantName: string) {
