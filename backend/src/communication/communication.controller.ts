@@ -7,12 +7,20 @@ import {
 } from '@nestjs/common';
 import { CommunicationService } from './communication.service';
 
-@Controller('communication')
+@Controller('api/communication')
 export class CommunicationController {
   constructor(private readonly communicationService: CommunicationService) {}
 
+  @Get()
+  test() {
+    return 'communication';
+  }
+
   @Get('token')
-  getToken(@Query('room') room: string, @Query('username') username: string) {
+  async getToken(
+    @Query('room') room: string,
+    @Query('username') username: string,
+  ) {
     if (!room) {
       throw new BadRequestException('Missing "room" query parameter');
     }
@@ -21,7 +29,7 @@ export class CommunicationController {
       throw new BadRequestException('Missing "username" query parameter');
     }
 
-    const token = this.communicationService.getToken(room, username);
+    const token = await this.communicationService.getToken(room, username);
     return { token };
   }
 }
