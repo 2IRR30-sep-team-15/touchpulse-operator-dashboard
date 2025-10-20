@@ -40,7 +40,10 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
               disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button
+            disabled={isLoading}
+            className="bg-[#E17100] hover:bg-[#C86400] transition-colors"
+          >
             {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Enter
           </Button>
