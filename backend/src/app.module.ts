@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { OperatorsService } from './operators/operators.service';
 import { OperatorsController } from './operators/operators.controller';
 import { TouchpulseModule } from './touchpulse/touchpulse.module';
+import { CommunicationModule } from './communication/communication.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TouchpulseModule } from './touchpulse/touchpulse.module';
     UsersModule,
     AuthModule,
     TouchpulseModule,
+    CommunicationModule,
   ],
   controllers: [AppController, OperatorsController],
   providers: [OperatorsService],
