@@ -2,31 +2,31 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Phone, MapPin } from 'lucide-react';
 
-interface ProfileItemProps {
-  profile: Profile;
-  onSelect?: (profile: Profile) => void;
+interface UserItemProps {
+  user: User;
+  onSelect?: (user: User) => void;
   className?: string;
 }
 
-export default function ProfileItem({ profile, onSelect }: ProfileItemProps) {
+export default function UserItem({ user, onSelect }: UserItemProps) {
   const handleCall = () => {
-    console.log('Do call logic: ', profile.name);
+    console.log('Do call logic: ', user.name);
   };
 
   const handleLocation = () => {
-    console.log('Do location logic: ', profile.name);
+    console.log('Do location logic: ', user.name);
   };
 
   return (
     <div
       className="flex items-center gap-3 py-3 px-2 transition-colors"
-      onClick={() => onSelect?.(profile)}
+      onClick={() => onSelect?.(user)}
     >
       {/* profile picture */}
       <Avatar>
-        {profile.image && <AvatarImage src={profile.image} />}
+        {user.image && <AvatarImage src={user.image} />}
         <AvatarFallback>
-          {profile.name
+          {user.settings.nickname
             ?.split(' ')
             .map((n) => n[0])
             .join('')}
@@ -36,10 +36,10 @@ export default function ProfileItem({ profile, onSelect }: ProfileItemProps) {
       {/* name and email */}
       <div className="flex-1">
         <p className="text-base font-medium text-gray-900 dark:text-gray-100">
-          {profile.name ?? 'NAME'}
+          {user.settings.nickname ?? 'NICKNAME'}
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          {profile.username ?? 'USERNAME'}
+          {user.email ?? 'EMAIL'}
         </p>
       </div>
 
