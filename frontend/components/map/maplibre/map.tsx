@@ -4,6 +4,7 @@ import { StyleContext } from '@/context/StyleContext';
 import { StyleContextType, SelectUserContextType } from '@/lib/types/map';
 import { SelectUserContext } from '@/context/SelectUserContext';
 import { DisplayUsers } from '@/components/map/maplibre/displayusers';
+import { DisplayLocation } from './displaylocation';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function MyMap() {
@@ -26,6 +27,7 @@ export default function MyMap() {
       onClick={() => setSelectedUser(undefined)}
     >
       <DisplayUsers />
+      <DisplayLocation />
       <NavigationControl />
     </Map>
   );

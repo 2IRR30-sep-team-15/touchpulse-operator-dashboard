@@ -19,4 +19,6 @@ export type MapControllerContextType = {
     map?: MapRef;
     setMap: (map?: MapRef) => void;
     focusUserOnMap: (coordinates: LngLatLike) => void;
+    searchedLocation?: { lon: number; lat: number };
+    setSearchedLocation: ( searchedLocation: { lon: number; lat: number }) => void;
 }
