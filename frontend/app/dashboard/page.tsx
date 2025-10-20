@@ -1,12 +1,11 @@
-"use client";
-import Sidebar from "@/app/dashboard/sidebar/sidebar";
-import Map from "@/app/dashboard/map/map";
+'use client';
 import SelectUserProvider from "@/context/SelectUserContext"
 import MapControllerProvider from "@/context/MapControllerContext";
 
+import Sidebar from '@/components/sidebar';
+import InteractiveMap from '@/components/map';
 
 export default function Home() {
-
   return (
     <div className="flex min-h-screen w-screen">
       <SelectUserProvider>
@@ -18,7 +17,7 @@ export default function Home() {
 
           {/* Map takes the remaining 3/4 */}
           <div className="w-3/4">
-            <Map />
+            <InteractiveMap />
           </div>
         </MapControllerProvider>
       </SelectUserProvider>

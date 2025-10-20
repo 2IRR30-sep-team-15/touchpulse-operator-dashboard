@@ -1,17 +1,23 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query('search') search?: string) {
+    return this.usersService.findAll(search);
   }
 
-  @Post()
-  create() {
-    return this.usersService.create();
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.usersService.findById(id);
+  }
+
+  @Post('sync')
+  @HttpCode(201)
+  sync() {
+    return this.usersService.sync();
   }
 }

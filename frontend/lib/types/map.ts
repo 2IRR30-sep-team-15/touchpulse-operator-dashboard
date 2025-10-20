@@ -1,6 +1,5 @@
 import { styles } from '@/lib/data/styles';
 import { LngLatLike, MapRef } from '@vis.gl/react-maplibre';
-import { Profile } from "@/lib/interfaces/profile"
 
 export type StyleKey = keyof typeof styles;
 
@@ -11,9 +10,9 @@ export type StyleContextType = {
 }
 
 export type SelectUserContextType = {
-    users: Array<Profile>;
-    selectedUser?: Profile;
-    setSelectedUser: (user?: Profile) => void;
+    users: Array<User>;
+    selectedUser?: User;
+    setSelectedUser: (user?: User) => void;
 }
 
 export type MapControllerContextType = {
