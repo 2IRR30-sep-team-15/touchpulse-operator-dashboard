@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 interface ChatsTabProps {
@@ -6,7 +6,24 @@ interface ChatsTabProps {
 }
 
 export default function ChatsTab({ user }: ChatsTabProps) {
-  const chats = user.chats;
+  // TODO: uncomment line below and remove the rest once the database gets populated with chat data
+  //const chats = user.chats;
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`/data/chats_${user.id}.json`)
+      .then((res) => res.json())
+      .then(setData);
+  });
+
+  let chats: Chat[] = [];
+
+  if (data) {
+    chats = data['chats'];
+  }
+
+  // end of TODO
 
   return (
     <div className="flex flex-col h-full space-y-6 overflow-y-auto">
