@@ -15,6 +15,7 @@ import UsersTab from '@/components/sidebar/users';
 import DetailsTab from '@/components/sidebar/details';
 import ChatsTab from '@/components/sidebar/chats';
 import CallTab from '@/components/sidebar/call';
+import SettingsTab from '@/components/sidebar/settings';
 
 type TabType =
   | 'settings'
@@ -33,11 +34,7 @@ export default function Sidebar() {
     <aside className="h-screen bg-gray-100 dark:bg-gray-900 p-4 flex flex-col border-r">
       {/* --- Main content --- */}
       <div className="flex-1 overflow-hidden w-full">
-        {activeTab === 'settings' && (
-          <div className="flex items-center justify-center h-full text-gray-500">
-            Settings placeholder
-          </div>
-        )}
+        {activeTab === 'settings' && <SettingsTab />}
 
         {activeTab === 'users' && (
           <UsersTab
