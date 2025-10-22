@@ -42,7 +42,7 @@ export default function Call() {
                     </div>
                     <div className="flex-none ml-auto">
                         <button
-                            className="text-white bg-black px-3 py-1 rounded hover:bg-red-700 transition"
+                            className="text-white px-3 py-1 rounded hover:bg-red-700 transition"
                             onClick={handleEnd}
                         >
                             End
