@@ -12,12 +12,13 @@ interface UserItemProps {
 }
 
 export default function UserItem({ user, onSelect }: UserItemProps) {
-  const handleCall = () => {
-    console.log('Do call logic: ', user.settings.nickname);
-  };
   const { focusUserOnMap } = useContext(
     MapControllerContext,
   ) as MapControllerContextType;
+
+  const handleCall = () => {
+    console.log('Do call logic: ', user.settings.nickname);
+  };
 
   const handleLocation = async () => {
     console.log('Do location logic: ', user.settings.nickname);
@@ -37,11 +38,11 @@ export default function UserItem({ user, onSelect }: UserItemProps) {
   };
   return (
     <div
-      className="flex items-center gap-3 py-3 px-2 transition-colors"
+      className="flex items-center gap-2 py-4 px-2 hover:bg-sidebar-primary cursor-pointer rounded-md transition"
       onClick={() => onSelect?.(user)}
     >
       {/* profile picture */}
-      <Avatar>
+      <Avatar className="w-10 h-10">
         {user?.image && <AvatarImage src={user?.image} />}
         <AvatarFallback>
           {user.settings.nickname
@@ -53,12 +54,10 @@ export default function UserItem({ user, onSelect }: UserItemProps) {
 
       {/* name and email */}
       <div className="flex-1">
-        <p className="text-base font-medium text-gray-900 dark:text-gray-100">
+        <p className="text-base font-medium">
           {user.settings.nickname ?? 'NICKNAME'}
         </p>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {user.email ?? 'EMAIL'}
-        </p>
+        <p className="text-sm text-muted-foreground">{user.email ?? 'EMAIL'}</p>
       </div>
 
       {/* action buttons */}
@@ -69,16 +68,16 @@ export default function UserItem({ user, onSelect }: UserItemProps) {
         <Button
           onClick={handleCall}
           variant="ghost"
-          size="icon"
-          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+          size="icon-lg"
+          className="p-2 rounded-md hover:bg-sidebar-primary cursor-pointer"
         >
           <Phone className="w-5 h-5" />
         </Button>
         <Button
           onClick={handleLocation}
           variant="ghost"
-          size="icon"
-          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition"
+          size="icon-lg"
+          className="p-2 rounded-md hover:bg-sidebar-primary cursor-pointer"
         >
           <MapPin className="w-5 h-5" />
         </Button>

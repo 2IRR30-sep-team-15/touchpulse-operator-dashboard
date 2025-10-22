@@ -1,12 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import {
-  Mail,
   Languages,
   Accessibility,
   Eye,
-  CircleEllipsis,
   Dog,
+  X,
+  CandyCane,
+  User,
+  Mail,
 } from 'lucide-react';
 
 interface DetailsTabProps {
@@ -35,9 +40,9 @@ export default function DetailsTab({ user }: DetailsTabProps) {
   );
 
   return (
-    <div className="h-full w-full">
+    <div className="flex flex-col h-full items-center gap-4">
       {/* 1. Profile Header Section */}
-      <div className="flex items-center justify-between pb-4">
+      <div className="flex items-center justify-between w-full shrink-0">
         <div className="flex items-center gap-3">
           <Avatar className="w-12 h-12">
             {user.image && <AvatarImage src={user.image} />}
@@ -45,82 +50,85 @@ export default function DetailsTab({ user }: DetailsTabProps) {
           </Avatar>
           <div>
             <p className="font-semibold text-lg">{user.settings.nickname}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              @{user.settings.nickname}
-            </p>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
         </div>
+        <Button
+          variant={'ghost'}
+          size="icon"
+          onClick={() => console.log('Close user details')}
+          className="cursor-pointer"
+        >
+          <X className="h-5 w-5" />
+        </Button>
       </div>
 
-      {/* Separator Line */}
-      <div className="border-t border-gray-200 dark:border-gray-700 mb-4" />
+      <Separator />
 
-      {/* 2. Contact Section */}
-      <section className="space-y-3 mb-6">
-        <h3 className="flex items-center gap-2 font-semibold text-base text-gray-900 dark:text-gray-100">
-          <Mail className="w-5 h-5" /> Contact
-        </h3>
+      {/* Main Content Sections */}
+      <ScrollArea className="flex-1 min-h-0 overflow-y-auto w-full pr-4">
+        <div className="flex flex-col gap-6 px-2">
+          {/* 2. Details Section */}
+          <section className="space-y-2">
+            <h3 className="flex items-center gap-2 font-semibold">
+              <User className="w-5 h-5" />
+              <span>Details</span>
+            </h3>
 
-        {/* Email */}
-        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 ml-7">
-          <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-          <p className="text-sm">{user.email}</p>
-        </div>
-      </section>
-
-      {/* 3. Languages Section */}
-      <section className="space-y-3 mb-6">
-        <h3 className="flex items-center gap-2 font-semibold text-base text-gray-900 dark:text-gray-100">
-          <Languages className="w-5 h-5" /> Languages
-        </h3>
-        <div className="flex gap-2 ml-7">
-          <Badge
-            variant="default"
-            className="bg-black text-white hover:bg-black/90"
-          >
-            {user.settings.language}
-          </Badge>
-        </div>
-      </section>
-
-      {/* 4. Accessibility Section */}
-      <section className="space-y-3 mb-6">
-        <h3 className="flex items-center gap-2 font-semibold text-base text-gray-900 dark:text-gray-100">
-          <Accessibility className="w-5 h-5" /> Accessibility
-        </h3>
-
-        <div className="space-y-2 ml-7">
-          {/* Sight */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-              <p>Sight:</p>
+            {/* Email */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Contact:</span>
+              </div>
+              <span className="text-sm">{user.email}</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              {user.demographic.sight_status}
-            </p>
-          </div>
-
-          {/* Cane */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {/* Using CircleEllipsis as a placeholder for the Cane icon in Lucide */}
-              <CircleEllipsis className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-              <p>Cane:</p>
+            {/* Languages */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Languages className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Languages:</span>
+              </div>
+              <Badge variant="default">{user.settings.language}</Badge>
             </div>
-            {renderBooleanBadge(user.demographic.uses_cane)}
-          </div>
+          </section>
 
-          {/* Guide Dog */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Dog className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-              <p>Guide Dog:</p>
+          {/* 4. Accessibility Section */}
+          <section className="space-y-2">
+            <h3 className="flex items-center gap-2 font-semibold">
+              <Accessibility className="w-5 h-5" />
+              <span>Accessibility</span>
+            </h3>
+
+            {/* Sight */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Eye className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Sight:</span>
+              </div>
+              <span className="text-sm">{user.demographic.sight_status}</span>
             </div>
-            {renderBooleanBadge(user.demographic.uses_guide_dog)}
-          </div>
+
+            {/* Cane */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CandyCane className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Cane:</span>
+              </div>
+              {renderBooleanBadge(user.demographic.uses_cane)}
+            </div>
+
+            {/* Guide Dog */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Dog className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Guide Dog:</span>
+              </div>
+              {renderBooleanBadge(user.demographic.uses_guide_dog)}
+            </div>
+          </section>
         </div>
-      </section>
+      </ScrollArea>
     </div>
   );
 }
