@@ -56,9 +56,8 @@ export default function SettingsTab() {
             ]}
           />
         </SettingItem>
-        <SettingItem label="Default zoom level">
+        <SettingItem label="Default zoom level" className="w-[30%]">
           <Slider
-            className=" w-[100]"
             defaultValue={[defaultZoom]}
             max={20}
             step={0.5}
