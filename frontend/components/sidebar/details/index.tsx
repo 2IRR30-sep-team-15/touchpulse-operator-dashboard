@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@radix-ui/react-separator';
+import { Separator } from '@/components/ui/separator';
 import {
   Languages,
   Accessibility,
@@ -11,6 +11,7 @@ import {
   X,
   CandyCane,
   User,
+  Mail,
 } from 'lucide-react';
 
 interface DetailsTabProps {
@@ -66,65 +67,67 @@ export default function DetailsTab({ user }: DetailsTabProps) {
 
       {/* Main Content Sections */}
       <ScrollArea className="flex-1 min-h-0 overflow-y-auto w-full pr-4">
-        {/* 2. Details Section */}
-        <section className="space-y-3 mb-6 px-2">
-          <h3 className="flex items-center gap-2 font-semibold">
-            <User className="w-5 h-5" />
-            <span>Details</span>
-          </h3>
+        <div className="flex flex-col gap-6 px-2">
+          {/* 2. Details Section */}
+          <section className="space-y-2">
+            <h3 className="flex items-center gap-2 font-semibold">
+              <User className="w-5 h-5" />
+              <span>Details</span>
+            </h3>
 
-          {/* Email */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Contact:</span>
+            {/* Email */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Contact:</span>
+              </div>
+              <span className="text-sm">{user.email}</span>
             </div>
-            <span className="text-sm">{user.email}</span>
-          </div>
-          {/* Languages */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Languages className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Languages:</span>
+            {/* Languages */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Languages className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Languages:</span>
+              </div>
+              <Badge variant="default">{user.settings.language}</Badge>
             </div>
-            <Badge variant="default">{user.settings.language}</Badge>
-          </div>
-        </section>
+          </section>
 
-        {/* 4. Accessibility Section */}
-        <section className="space-y-3 mb-6 px-2">
-          <h3 className="flex items-center gap-2 font-semibold">
-            <Accessibility className="w-5 h-5" />
-            <span>Accessibility</span>
-          </h3>
+          {/* 4. Accessibility Section */}
+          <section className="space-y-2">
+            <h3 className="flex items-center gap-2 font-semibold">
+              <Accessibility className="w-5 h-5" />
+              <span>Accessibility</span>
+            </h3>
 
-          {/* Sight */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Sight:</span>
+            {/* Sight */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Eye className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Sight:</span>
+              </div>
+              <span className="text-sm">{user.demographic.sight_status}</span>
             </div>
-            <span className="text-sm">{user.demographic.sight_status}</span>
-          </div>
 
-          {/* Cane */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CandyCane className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Cane:</span>
+            {/* Cane */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CandyCane className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Cane:</span>
+              </div>
+              {renderBooleanBadge(user.demographic.uses_cane)}
             </div>
-            {renderBooleanBadge(user.demographic.uses_cane)}
-          </div>
 
-          {/* Guide Dog */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Dog className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Guide Dog:</span>
+            {/* Guide Dog */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Dog className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">Guide Dog:</span>
+              </div>
+              {renderBooleanBadge(user.demographic.uses_guide_dog)}
             </div>
-            {renderBooleanBadge(user.demographic.uses_guide_dog)}
-          </div>
-        </section>
+          </section>
+        </div>
       </ScrollArea>
     </div>
   );
