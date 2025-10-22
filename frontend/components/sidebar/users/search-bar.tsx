@@ -14,7 +14,7 @@ export default function SearchBar({
       placeholder="Search users..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className="focus-visible:ring-0 hover:bg-accent duration-100"
+      className="focus-visible:ring-0 w-full"
     />
   );
 }

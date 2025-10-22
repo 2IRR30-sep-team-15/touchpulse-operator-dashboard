@@ -15,7 +15,9 @@ export default function UsersTab({
 
   return (
     <div className="flex flex-col h-full items-center gap-4">
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <div className="w-full shrink-0">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </div>
 
       {isLoading ? (
         <LoadingThreeDots />

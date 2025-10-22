@@ -26,7 +26,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
               autoComplete="username"
               autoCorrect="off"
               disabled={isLoading}
-              className="border-gray-300"
+              className="border-gray-300 text-black"
             />
             <Label className="sr-only" htmlFor="password">
               Password
@@ -39,7 +39,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
-              className="border-gray-300"
+              className="border-gray-300 text-black"
             />
           </div>
           <Button

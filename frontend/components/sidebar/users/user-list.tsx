@@ -1,3 +1,4 @@
+import { ScrollArea } from '@/components/ui/scroll-area';
 import UserItem from './user-item';
 
 interface UsersListProps {
@@ -7,13 +8,18 @@ interface UsersListProps {
 
 export default function UsersList({ users: users, onSelect }: UsersListProps) {
   return (
-    <div
-      className="flex-1 w-full overflow-y-auto divide-y divide-gray-300 dark:divide-gray-700
-      [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-    >
-      {users.map((user) => (
-        <UserItem key={user.id} user={user} onSelect={onSelect} />
-      ))}
-    </div>
+    <ScrollArea className="flex-1 min-h-0 overflow-y-auto w-full pr-4">
+      <div className="flex flex-col gap-2 w-full">
+        {users.length === 0 && (
+          <div className="text-sm text-muted-foreground text-center">
+            No users found.
+          </div>
+        )}
+
+        {users.map((user) => (
+          <UserItem key={user.id} user={user} onSelect={onSelect} />
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
