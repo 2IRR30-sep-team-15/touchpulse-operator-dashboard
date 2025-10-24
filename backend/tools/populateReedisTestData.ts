@@ -1,5 +1,5 @@
 import { Client } from 'redis-om';
-import { userSchema } from '../src/users/users.schemas';
+import { userSchema } from '../src/users/users.schema';
 
 async function populateTestUsers() {
   const client = new Client();
