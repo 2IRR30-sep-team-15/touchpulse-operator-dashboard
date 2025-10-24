@@ -17,6 +17,7 @@ import UsersTab from '@/components/sidebar/users';
 import DetailsTab from '@/components/sidebar/details';
 import ChatsTab from '@/components/sidebar/chats';
 import CallTab from '@/components/sidebar/call';
+import SettingsTab from '@/components/sidebar/settings';
 import { Separator } from '@/components/ui/separator';
 
 type TabType =
@@ -63,7 +64,7 @@ export default function Sidebar() {
       <div className="flex h-full min-h-0 flex-col">
         {activeTab === 'settings' && (
           <div className="flex items-center justify-center h-full">
-            Settings placeholder
+            <SettingsTab />
           </div>
         )}
 
