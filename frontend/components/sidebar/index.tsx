@@ -8,6 +8,8 @@ import {
   Map,
   Settings,
   Video,
+  MapPin,
+  SidebarClose,
 } from 'lucide-react';
 
 import LocationsTab from '@/components/sidebar/locations';
@@ -16,6 +18,7 @@ import DetailsTab from '@/components/sidebar/details';
 import ChatsTab from '@/components/sidebar/chats';
 import CallTab from '@/components/sidebar/call';
 import SettingsTab from '@/components/sidebar/settings';
+import { Separator } from '@/components/ui/separator';
 
 type TabType =
   | 'settings'
@@ -31,10 +34,39 @@ export default function Sidebar() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   return (
-    <aside className="h-screen bg-gray-100 dark:bg-gray-900 p-4 flex flex-col border-r">
+    <aside className="h-screen bg-sidebar p-4 flex flex-col gap-4">
+      {/* Header with logo  */}
+      <div className="flex items-center gap-2 justify-between">
+        <div className="flex items-center gap-2">
+          <Button
+            variant={'default'}
+            size="icon-sm"
+            onClick={() => console.log('Logo clicked')}
+            className="accent-foreground cursor-pointer"
+          >
+            <MapPin className="h-5 w-5" />
+          </Button>
+          <h1 className="font-bold">Pathway dashboard</h1>
+        </div>
+        <Button
+          variant={'ghost'}
+          size="icon"
+          onClick={() => console.log('Close sidebar')}
+          className="cursor-pointer"
+        >
+          <SidebarClose className="h-5 w-5" />
+        </Button>
+      </div>
+
+      <Separator />
+
       {/* --- Main content --- */}
-      <div className="flex-1 overflow-hidden w-full">
-        {activeTab === 'settings' && <SettingsTab />}
+      <div className="flex h-full min-h-0 flex-col">
+        {activeTab === 'settings' && (
+          <div className="flex items-center justify-center h-full">
+            <SettingsTab />
+          </div>
+        )}
 
         {activeTab === 'users' && (
           <UsersTab
@@ -45,49 +77,52 @@ export default function Sidebar() {
           />
         )}
 
-        {activeTab === 'details' && (
-          <div className="flex flex-col items-center justify-center h-full w-full">
-            {selectedUser ? (
-              <DetailsTab user={selectedUser} />
-            ) : (
+        {activeTab === 'details' &&
+          (selectedUser ? (
+            <DetailsTab user={selectedUser} />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full w-full">
               <p>No user selected</p>
-            )}
-          </div>
-        )}
+            </div>
+          ))}
 
-        {activeTab === 'chats' && (
-          <div className="flex flex-col items-center justify-center h-full">
-            {selectedUser ? (
-              <ChatsTab user={selectedUser} />
-            ) : (
+        {activeTab === 'chats' &&
+          (selectedUser ? (
+            <ChatsTab user={selectedUser} />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full w-full">
               <p>No user selected</p>
-            )}
-          </div>
-        )}
+            </div>
+          ))}
 
-        {activeTab === 'locations' && (
-          <div className="flex flex-col items-center justify-center h-full">
-            {selectedUser ? (
-              <LocationsTab profile={selectedUser} />
-            ) : (
+        {activeTab === 'locations' &&
+          (selectedUser ? (
+            <LocationsTab profile={selectedUser} />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full w-full">
               <p>No user selected</p>
-            )}
-          </div>
-        )}
+            </div>
+          ))}
 
-        {activeTab === 'call' && (
-          <div className="flex flex-col items-center justify-center h-full">
-            {selectedUser ? <CallTab /> : <p>No user selected</p>}
-          </div>
-        )}
+        {activeTab === 'call' &&
+          (selectedUser ? (
+            <CallTab />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full w-full">
+              <p>No user selected</p>
+            </div>
+          ))}
       </div>
 
+      <Separator />
+
       {/* --- Bottom menu --- */}
-      <div className="flex justify-around border-t pt-2 mt-2 border-gray-100">
+      <div className="flex justify-around">
         <Button
           variant={activeTab === 'settings' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('settings')}
+          className="cursor-pointer"
         >
           <Settings className="h-5 w-5" />
         </Button>
@@ -96,17 +131,18 @@ export default function Sidebar() {
           variant={activeTab === 'users' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('users')}
+          className="cursor-pointer"
         >
           <Search className="h-5 w-5" />
         </Button>
 
-        {/* --- Vertical Separator --- */}
-        <div className="border-l border-gray-100 h-8 mx-1 self-center" />
+        <Separator orientation="vertical" className="mx-2" />
 
         <Button
           variant={activeTab === 'details' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('details')}
+          className="cursor-pointer"
         >
           <User className="h-5 w-5" />
         </Button>
@@ -115,6 +151,7 @@ export default function Sidebar() {
           variant={activeTab === 'chats' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('chats')}
+          className="cursor-pointer"
         >
           <MessageCircle className="h-5 w-5" />
         </Button>
@@ -123,6 +160,7 @@ export default function Sidebar() {
           variant={activeTab === 'locations' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('locations')}
+          className="cursor-pointer"
         >
           <Map className="h-5 w-5" />
         </Button>
@@ -131,6 +169,7 @@ export default function Sidebar() {
           variant={activeTab === 'call' ? 'default' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('call')}
+          className="cursor-pointer"
         >
           <Video className="h-5 w-5" />
         </Button>

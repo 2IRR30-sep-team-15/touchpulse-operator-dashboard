@@ -11,6 +11,6 @@ interface User {
   sessions: string[];
   created_at: number;
 
-  chat?: Chat[];
+  chats?: Chat[];
   locations?: Location[];
 }

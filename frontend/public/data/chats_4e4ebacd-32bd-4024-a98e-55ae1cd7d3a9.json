@@ -1,0 +1,14 @@
+{
+  "chats": [
+    {
+      "correspondent": "Maria",
+      "lastMessage": "Can we reschedule?",
+      "timestamp": "15 min ago"
+    },
+    {
+      "correspondent": "Emergency Contact",
+      "lastMessage": "Confirmed safe.",
+      "timestamp": "3 days ago"
+    }
+  ]
+}

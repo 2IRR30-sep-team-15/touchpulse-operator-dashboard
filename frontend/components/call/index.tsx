@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Call() {
     {/* Visibility of green line on top */}
@@ -33,16 +34,15 @@ export default function Call() {
             {visibleLine && (
                 <div className="fixed top-0 left-0 w-screen bg-green-600 flex items-center px-4 py-2">
                     <div className="flex-1 flex justify-center items-center gap-4">
-                        <span className="text-white">Call in progress:</span>
-                        <span className="text-white font-semibold">{callerName}</span>
+                        <span className="text-white">Call in progress: <b>{callerName}</b></span>
                         <span className="text-white flex items-center gap-2">
-                            <img src="clock.png"></img>
+                            <Image src="/clock.png" alt="clock" width={16} height={16} />
                             <span className="font-medium">{time}</span>
                         </span>
                     </div>
                     <div className="flex-none ml-auto">
                         <button
-                            className="text-white bg-black px-3 py-1 rounded hover:bg-red-700 transition"
+                            className="text-white px-3 py-1 rounded hover:bg-red-700 transition"
                             onClick={handleEnd}
                         >
                             End

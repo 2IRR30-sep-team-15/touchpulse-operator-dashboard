@@ -1,0 +1,14 @@
+{
+  "chats": [
+    {
+      "correspondent": "Alex",
+      "lastMessage": "See you at 4pm!",
+      "timestamp": "2 hours ago"
+    },
+    {
+      "correspondent": "Support Team",
+      "lastMessage": "Issue resolved.",
+      "timestamp": "Yesterday"
+    }
+  ]
+}

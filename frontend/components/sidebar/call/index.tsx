@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, MicOff, PhoneOff, PhoneCall } from 'lucide-react';
+import { PhoneOff, PhoneCall } from 'lucide-react';
+import { Track, Room } from 'livekit-client';
+import {
+  TrackToggle,
+  RoomAudioRenderer,
+  RoomContext,
+  useTracks,
+  GridLayout,
+  ParticipantTile,
+  useRoomContext,
+} from '@livekit/components-react';
+import '@livekit/components-styles';
 
 // Simplified type for the component's state
 type ControlState = {
@@ -10,9 +21,16 @@ type ControlState = {
 
 export default function CallTab() {
   const [controls, setControls] = useState<ControlState>({
-    isMuted: false,
+    isMuted: true,
     isCalling: false,
   });
+  const [roomInstance] = useState(
+    () =>
+      new Room({
+        adaptiveStream: true,
+        dynacast: true,
+      }),
+  );
 
   // Unified toggle function
   const toggleControl = (key: 'isMuted') => {
@@ -20,14 +38,39 @@ export default function CallTab() {
   };
 
   const handleEndCall = () => {
+    roomInstance.disconnect();
     setControls((prev) => ({ ...prev, isCalling: false }));
     console.log('Call Ended.');
   };
 
-  const handleStartCall = () => {
+  async function handleStartCall() {
+    try {
+      const roomId = 'room-123';
+      const operatorId = 'operator-1';
+      const livekitURL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
+
+      if (!livekitURL) {
+        throw new Error('LiveKit URL is not defined');
+      }
+
+      const response = await fetch(
+        `http://localhost:8080/api/communication/token?room=${encodeURIComponent(roomId)}&username=${encodeURIComponent(operatorId)}`,
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch call token');
+      }
+
+      const data = await response.json();
+      if (data.token) {
+        await roomInstance.connect(livekitURL, data.token);
+      }
+    } catch (err) {
+      console.error(err);
+    }
     setControls((prev) => ({ ...prev, isCalling: true }));
     console.log('Call Initiated.');
-  };
+  }
 
   // Derived values for the primary call button
   const PrimaryCallButtonIcon = controls.isCalling ? PhoneOff : PhoneCall;
@@ -40,8 +83,68 @@ export default function CallTab() {
     : handleStartCall;
 
   return (
-    <div className="flex flex-col w-full h-full p-4 space-y-4 dark:bg-gray-900 dark:text-white">
-      {/* 1. Video Display Area (Vertical 3:4 Aspect Ratio) */}
+    <RoomContext.Provider value={roomInstance}>
+      <div className="flex flex-col w-full h-full p-4 space-y-4 dark:bg-gray-900 dark:text-white">
+        <MyVideoConference />
+
+        {/* 2. Controls Area */}
+        <div className="flex justify-around items-center">
+          <TrackToggle
+            onChange={(enabled, isUserInitiated) => {
+              console.log('Enabled: ', enabled, 'isMuted', controls.isMuted);
+              if (isUserInitiated) {
+                toggleControl('isMuted');
+              }
+            }}
+            aria-label={controls.isMuted ? 'Unmute' : 'Mute'}
+            source={Track.Source.Microphone}
+            className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
+                                shadow-lg font-semibold text-xs sm:text-sm w-full max-w-[80px] h-16 sm:h-20
+                                ${controls.isMuted
+                ? 'bg-red-500 hover:bg-red-600'
+                : 'bg-gray-700/50 hover:bg-gray-600/50'
+              }
+                                `}
+          >
+            <span className="hidden sm:inline mt-4">
+              {controls.isMuted ? 'Unmute' : 'Mute'}
+            </span>
+          </TrackToggle>
+
+          {/* Primary Action Button (End/Start Call) */}
+          <Button
+            onClick={PrimaryCallButtonHandler}
+            aria-label={PrimaryCallButtonLabel}
+            // Applying the required custom vertical layout and sizing classes
+            className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
+                                ${PrimaryCallButtonClasses} shadow-xl font-bold text-xs sm:text-sm 
+                                w-full max-w-[80px] h-16 sm:h-20`}
+          >
+            <PrimaryCallButtonIcon className="w-6 h-6 mb-1" />
+            <span className="hidden sm:inline">{PrimaryCallButtonLabel}</span>
+          </Button>
+        </div>
+        <RoomAudioRenderer />
+        {/* <ControlBar /> */}
+      </div>
+    </RoomContext.Provider>
+  );
+}
+
+function MyVideoConference(controls: ControlState) {
+  const room = useRoomContext();
+
+  // `useTracks` returns all camera and screen share tracks. If a user
+  // joins without a published camera track, a placeholder track is returned.
+  const tracks = useTracks(
+    [{ source: Track.Source.Camera, withPlaceholder: true }],
+    { onlySubscribed: false },
+  );
+
+  const remoteParticiants = room.remoteParticipants;
+  if (remoteParticiants.size === 0) {
+    return (
+      //  1. Video Display Area (Vertical 3:4 Aspect Ratio)
       <div className="flex justify-center w-full flex-grow">
         <div
           className="w-full bg-black/80 rounded-2xl relative overflow-hidden shadow-2xl"
@@ -58,46 +161,20 @@ export default function CallTab() {
           </div>
         </div>
       </div>
+    );
+  }
 
-      {/* 2. Controls Area */}
-      <div className="flex justify-around items-center">
-        {/* Mute/Unmute Button (Uses custom classes for the vertical stack look) */}
-        <Button
-          onClick={() => toggleControl('isMuted')}
-          aria-label={controls.isMuted ? 'Unmute' : 'Mute'}
-          // Applying the required custom vertical layout and sizing classes
-          className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
-                                shadow-lg font-semibold text-xs sm:text-sm w-full max-w-[80px] h-16 sm:h-20
-                                ${
-                                  controls.isMuted
-                                    ? 'bg-red-500 hover:bg-red-600'
-                                    : 'bg-gray-700/50 hover:bg-gray-600/50'
-                                }
-                                `}
-        >
-          {controls.isMuted ? (
-            <MicOff className="w-6 h-6 mb-1" />
-          ) : (
-            <Mic className="w-6 h-6 mb-1" />
-          )}
-          <span className="hidden sm:inline">
-            {controls.isMuted ? 'Unmute' : 'Mute'}
-          </span>
-        </Button>
-
-        {/* Primary Action Button (End/Start Call) */}
-        <Button
-          onClick={PrimaryCallButtonHandler}
-          aria-label={PrimaryCallButtonLabel}
-          // Applying the required custom vertical layout and sizing classes
-          className={`flex flex-col items-center justify-center rounded-xl transition-all duration-200 
-                                ${PrimaryCallButtonClasses} shadow-xl font-bold text-xs sm:text-sm 
-                                w-full max-w-[80px] h-16 sm:h-20`}
-        >
-          <PrimaryCallButtonIcon className="w-6 h-6 mb-1" />
-          <span className="hidden sm:inline">{PrimaryCallButtonLabel}</span>
-        </Button>
-      </div>
-    </div>
+  const filteredTracks = tracks.filter((track) => {
+    return track.participant.identity !== room.localParticipant.identity;
+  });
+  return (
+    <GridLayout
+      tracks={filteredTracks}
+      style={{ height: 'calc(100vh - var(--lk-control-bar-height))' }}
+    >
+      {/* The GridLayout accepts zero or one child. The child is used
+      as a template to render all passed in tracks. */}
+      <ParticipantTile />
+    </GridLayout>
   );
 }
